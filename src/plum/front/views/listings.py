@@ -46,3 +46,6 @@ class ProductDetail(DetailView):
 class ProductPricing(ProductDetail):
     template_name = 'front/product_pricing.html'
 
+
+class ProductVersions(ProductDetail):
+    template_name = 'front/product_versions.html'

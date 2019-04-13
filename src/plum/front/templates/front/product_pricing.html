@@ -3,13 +3,14 @@
 {% load static %}
 {% load money %}
 {% load i18n %}
+{% load humanize %}
 {% block inner %}
     <div class="card">
         <div class="card-body">
             <div class="row">
                 {% for t in product.tiers.all %}
                     <div class="col text-center">
-                        <small>{{ t.up_to_value }} {{ product.pricing_tiers_variable }}</small>
+                        <small>{{ t.up_to_value|intcomma }} {{ product.pricing_tiers_variable }}</small>
                         <br>
                         <span class="text-primary">{{ t.price|money:siteconf.currency }}</span>
                     </div>

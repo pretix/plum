@@ -46,6 +46,33 @@
                     {% endif %}
                 </div>
             </div>
+            {% if product.website_url %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <a href="{{ product.website_url }}" target="_blank">
+                            <span class="fa fa-globe fa-fw"></span> {% trans "View product website" %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if product.github_url %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <a href="{{ product.github_url }}" target="_blank">
+                            <span class="fa fa-github fa-fw"></span> {% trans "View on GitHub" %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if product.pypi_name %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <a href="https://pypi.python.org/pypi/PySide{{ product.pypi_name }}" target="_blank">
+                            <span class="fa fa-python fa-fw"></span> {% trans "View on PyPI" %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

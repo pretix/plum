@@ -64,9 +64,11 @@ class Product(models.Model):
 
     github_url = models.URLField(blank=True)
     website_url = models.URLField(blank=True)
+    pypi_name = models.CharField(blank=True, max_length=190)
 
     class Meta:
         verbose_name = _('Product')
+        ordering = ("-certified", "name",)
 
     def __str__(self):
         return self.name
@@ -96,15 +98,21 @@ class ProductVersion(models.Model):
     release_notes = models.TextField(blank=True)
 
     deliverable_url = models.URLField(blank=True)
-    deliverable_file = models.FileField(null=True, upload_to=deliverable_filename)
+    deliverable_file = models.FileField(null=True, upload_to=deliverable_filename, blank=True)
 
     min_platform_version = models.ForeignKey('PlatformVersion', on_delete=models.PROTECT, related_name='products_from',
-                                             verbose_name=_('Minimum platform version'), null=True)
+                                             verbose_name=_('Minimum platform version'), null=True, blank=True)
     max_platform_version = models.ForeignKey('PlatformVersion', on_delete=models.PROTECT, related_name='products_upto',
-                                             verbose_name=_('Maximum platform version'), null=True)
+                                             verbose_name=_('Maximum platform version'), null=True, blank=True)
+
+    class Meta:
+        ordering = ("-release_date",)
 
 
 class ProductPriceTier(models.Model):
     product = models.ForeignKey(Product, related_name='tiers', on_delete=models.CASCADE)
     up_to_value = models.IntegerField(verbose_name=_('Maximum value of pricing variable'))
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Price'))
+
+    class Meta:
+        ordering = ("up_to_value",)

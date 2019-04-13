@@ -10,6 +10,7 @@ whitenoise
 markdown
 babel
 pycountry
+requests
 
 ipython
 django-extensions

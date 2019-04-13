@@ -16,7 +16,7 @@
             {% if product.stability == "alpha" %}
                 <span class="badge bg-danger">{% trans "alpha" %}</span>
             {% elif product.stability == "beta" %}
-                <span class="badge bg-warning">{% trans "alpha" %}</span>
+                <span class="badge bg-warning">{% trans "beta" %}</span>
             {% endif %}
             {% if product.certified %}
                 <span class="badge rounded-pill bg-success" data-toggle="tooltip" title="{% trans "Certified plugin" %}">
@@ -47,7 +47,7 @@
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == "product.versions" %}active{% endif %}"
-                   href="{% url "front:product" product=product.pk %}">
+                   href="{% url "front:product.versions" product=product.pk %}">
                     {% trans "Versions" %}
                 </a>
             </li>

@@ -1,0 +1,44 @@
+{% extends "front/product_base.html" %}
+{% load compress %}
+{% load static %}
+{% load rich_text %}
+{% load i18n %}
+{% load humanize %}
+{% block inner %}
+    {% for v in product.versions.all %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10">
+                        <strong>{{ v.name }}</strong><br>
+                        <span class="text-muted">{{ v.release_date|date:"SHORT_DATE_FORMAT" }}</span>
+                    </div>
+                    <div class="col-2">
+                        {% if product.delivery_method == "pypi" and v.deliverable_url %}
+                            <a href="{{ v.deliverable_url }}" target="_blank" class="btn btn-outline-primary btn-block">
+                                <span class="fa fa-download"></span>
+                                <span class="d-none d-md-inline">{% trans "Download" %}</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if v.min_platform_version and v.max_platform_version %}
+                    <div>
+                        {% trans "Supported platform versions:" %} {{ v.min_platform_version }} – {{ v.max_platform_version }}
+                    </div>
+                {% elif v.min_platform_version %}
+                    <div>
+                        {% trans "Minimum platform version:" %} {{ v.min_platform_version }}
+                    </div>
+                {% elif v.max_platform_version %}
+                    <div>
+                        {% trans "Maximumplatform version:" %} {{ v.max_platform_version }}
+                    </div>
+                {% endif %}
+                {% if v.release_notes %}
+                    {{ v.release_notes|rich_text }}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
