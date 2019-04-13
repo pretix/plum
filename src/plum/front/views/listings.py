@@ -49,3 +49,7 @@ class ProductPricing(ProductDetail):
 
 class ProductVersions(ProductDetail):
     template_name = 'front/product_versions.html'
+
+
+class ProductInstructions(ProductDetail):
+    template_name = 'front/product_instructions.html'

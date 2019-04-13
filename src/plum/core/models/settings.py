@@ -31,6 +31,17 @@ class SiteConfiguration(SingletonModel):
     currency = models.CharField(max_length=10,
                                 choices=CURRENCY_CHOICES,
                                 default="EUR")
+    pre_install_commands = models.TextField(
+        default='$ source /var/pretix/venv/bin/activate'
+    )
+    post_install_commands = models.TextField(
+        default='(venv)$ python -m pretix migrate\n'
+                '(venv)$ python -m pretix rebuild\n'
+                '# systemctl restart pretix-web pretix-worker'
+    )
+    doc_installation = models.URLField(
+        default='https://docs.pretix.eu/en/latest/admin/installation/index.html'
+    )
 
     def __unicode__(self):
         return u"Site Configuration"

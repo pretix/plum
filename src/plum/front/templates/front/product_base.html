@@ -40,7 +40,7 @@
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == "product.instructions" %}active{% endif %}"
-                       href="{% url "front:product" product=product.pk %}">
+                       href="{% url "front:product.instructions" product=product.pk %}">
                         {% trans "Instructions" %}
                     </a>
                 </li>

@@ -1,0 +1,22 @@
+{% extends "front/product_base.html" %}
+{% load compress %}
+{% load static %}
+{% load rich_text %}
+{% load i18n %}
+{% load humanize %}
+{% block inner %}
+    {% if product.delivery_method == "pypi" %}
+        {% trans "In a standard setup, you can install this plugin like this:" %}
+        <div class="card my-3">
+        <pre class="card-body my-0"><code>{{ siteconf.pre_install_commands|safe }}
+(venv)$ pip install {{ product.pypi_name }}
+{{ siteconf.post_install_commands|safe }}</code></pre>
+        </div>
+        <p>
+            {% trans "For more information and other types of setups, please refer to the install guide." %}
+        </p>
+        <a href="{{ siteconf.doc_installation }}" class="btn btn-outline-primary">
+            <span class="fa fa-book"></span> {% trans "Read documentation" %}
+        </a>
+    {% endif %}
+{% endblock %}

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^products/(?P<product>\d+)/$', listings.ProductDetail.as_view(), name="product"),
     url(r'^products/(?P<product>\d+)/pricing$', listings.ProductPricing.as_view(), name="product.pricing"),
     url(r'^products/(?P<product>\d+)/versions$', listings.ProductVersions.as_view(), name="product.versions"),
+    url(r'^products/(?P<product>\d+)/instructions$', listings.ProductInstructions.as_view(), name="product.instructions"),
 ]
