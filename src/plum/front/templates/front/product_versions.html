@@ -40,5 +40,7 @@
                 {% endif %}
             </div>
         </div>
+    {% empty %}
+        <p>{% trans "No version of this product have been uploaded yet." %}</p>
     {% endfor %}
 {% endblock %}

@@ -36,7 +36,7 @@ class CategoryPage(ListView):
 
 class ProductDetail(DetailView):
     context_object_name = 'product'
-    pk_url_kwarg = 'product'
+    slug_url_kwarg = 'product'
     template_name = 'front/product.html'
 
     def get_queryset(self):
@@ -53,3 +53,7 @@ class ProductVersions(ProductDetail):
 
 class ProductInstructions(ProductDetail):
     template_name = 'front/product_instructions.html'
+
+
+class ProductBuy(ProductDetail):
+    template_name = 'front/product_buy.html'

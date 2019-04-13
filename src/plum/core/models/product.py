@@ -47,6 +47,7 @@ class Product(models.Model):
     )
 
     name = models.CharField(max_length=190, verbose_name=_('Name'))
+    slug = models.SlugField(unique=True, verbose_name=_('Slug'))
     category = models.ForeignKey('Category', verbose_name=_('Product category'), on_delete=models.PROTECT)
     vendor = models.ForeignKey('Vendor', verbose_name=_('Product vendor'), on_delete=models.PROTECT, null=False)
     long_description = models.TextField(verbose_name=_('Long description'))

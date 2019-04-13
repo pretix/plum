@@ -1,0 +1,14 @@
+{% extends "front/product_base.html" %}
+{% load compress %}
+{% load static %}
+{% load money %}
+{% load i18n %}
+{% load humanize %}
+{% block inner %}
+    <div class="text-center">
+        <h3>{% trans "Hey, nice to meet you!" %}</h3>
+        <p>{% trans "Unfortunately, we're not yet able to automatically sell plugin licenses through this marketplace. We'll add that, soon!" %}</p>
+        <p>{% trans "In the meantime, please just get in touch. We'll make sure to handle this quickly!" %}</p>
+        <a href="mailto:{{ product.vendor.support_contact_email }}" class="btn btn-lg btn-success">Contact us</a>
+    </div>
+{% endblock %}
