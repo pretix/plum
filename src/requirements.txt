@@ -1,0 +1,6 @@
+django==2.2.*
+djangorestframework==3.9.*
+whitenoise
+
+ipython
+django-extensions

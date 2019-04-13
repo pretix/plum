@@ -1,0 +1,17 @@
+[plum]
+url = http://localhost
+
+[database]
+backend = sqlite3
+name = db.sqlite3
+user = 
+password =
+host =
+port =
+
+[main]
+from = admin@localhost
+host = localhost
+port = 25
+user = 
+password = 
