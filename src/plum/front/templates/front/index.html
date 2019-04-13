@@ -1,0 +1,24 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ siteconf.site_name }}</h1>
+            <p class="lead text-muted">{{ siteconf.front_page_intro|safe }}</p>
+        </div>
+    </section>
+
+    <div class="album py-5">
+        <div class="container">
+
+            <div class="row">
+                {% for p in products %}
+                    {% include "front/product_card.html" with p=p %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

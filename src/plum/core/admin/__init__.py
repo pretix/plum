@@ -1,6 +1,7 @@
 from django.contrib.admin import AdminSite, ModelAdmin, TabularInline, StackedInline
+from solo.admin import SingletonModelAdmin
 
-from ..models import PlatformVersion, PriceVariable, Category, Product, ProductPriceTier, ProductScreenshot, ProductVersion, Vendor
+from ..models import PlatformVersion, PriceVariable, Category, Product, ProductPriceTier, ProductScreenshot, ProductVersion, Vendor, SiteConfiguration
 
 
 class PlumAdminSite(AdminSite):
@@ -46,3 +47,4 @@ site.register(PriceVariable)
 site.register(Category)
 site.register(Vendor, VendorAdmin)
 site.register(Product, ProductAdmin)
+site.register(SiteConfiguration, SingletonModelAdmin)

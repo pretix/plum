@@ -1,0 +1,20 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+    <div class="container py-5">
+        <h2 class="pb-2">{% trans "Categories" %}</h2>
+        <div class="row">
+            <ul>
+                {% for c in categories %}
+                    <li>
+                        <a href="{% url "front:category" cat=c.pk %}">
+                            {{ c }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

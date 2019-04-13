@@ -48,6 +48,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=190, verbose_name=_('Name'))
     category = models.ForeignKey('Category', verbose_name=_('Product category'), on_delete=models.PROTECT)
+    vendor = models.ForeignKey('Vendor', verbose_name=_('Product vendor'), on_delete=models.PROTECT, null=False)
     long_description = models.TextField(verbose_name=_('Long description'))
     approved = models.BooleanField(default=False, verbose_name=_('Approved and visible'))
     certified = models.BooleanField(default=False, verbose_name=_('Certified plugin'))

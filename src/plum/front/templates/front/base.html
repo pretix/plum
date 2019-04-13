@@ -1,0 +1,61 @@
+{% load compress %}
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ siteconf.site_name }}</title>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "front/scss/main.scss" %}" type="text/x-scss">
+    {% endcompress %}
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">
+        <a href="{% url "front:index" %}">
+            {{ siteconf.site_name }}
+        </a>
+    </h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="{% url "front:categories" %}">{% trans "Categories" %}</a>
+    </nav>
+    <!--<a class="btn btn-outline-primary" href="#">Sign up</a>-->
+</div>
+
+<main role="main">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                {{ siteconf.site_name }}
+                <small class="d-block mb-3 text-muted">&copy; {% now "Y" %}</small>
+            </div>
+            <div class="col-6 col-md">
+                {{ siteconf.footer_column_1|safe }}
+            </div>
+            <div class="col-6 col-md">
+                {{ siteconf.footer_column_2|safe }}
+            </div>
+            <div class="col-6 col-md">
+                {{ siteconf.footer_column_3|safe }}
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% compress js %}
+    <script type="text/javascript" src="{% static "vendor/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendor/popper.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "vendor/bootstrap/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "front/js/main.js" %}"></script>
+{% endcompress %}
+</body>
+</html>

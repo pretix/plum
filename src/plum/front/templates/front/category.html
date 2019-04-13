@@ -1,0 +1,20 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    <div class="py-5">
+        <div class="container">
+            <h2 class="pb-2">{{ category }}</h2>
+        <p>
+
+        </p>
+            <div class="row">
+                {% for p in products %}
+                    {% include "front/product_card.html" with p=p %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
