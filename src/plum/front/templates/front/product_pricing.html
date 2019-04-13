@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                {% for t in product.tiers.all %}
+                {% for t in product.visible_tiers %}
                     <div class="col text-center">
                         <small>{{ t.up_to_value|intcomma }} {{ product.pricing_tiers_variable }}</small>
                         <br>

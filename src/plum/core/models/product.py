@@ -74,6 +74,10 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def visible_tiers(self):
+        return self.tiers.filter(visible=True)
+
 
 def screenshot_filename(instance, filename):
     return 'screenshots/{}/{}{}'.format(instance.product_id, str(uuid.uuid4()), os.path.splitext(filename)[1])
@@ -112,8 +116,12 @@ class ProductVersion(models.Model):
 
 class ProductPriceTier(models.Model):
     product = models.ForeignKey(Product, related_name='tiers', on_delete=models.CASCADE)
+    visible = models.BooleanField(default=True)
     up_to_value = models.IntegerField(verbose_name=_('Maximum value of pricing variable'))
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Price'))
+
+    def __str__(self):
+        return str(self.up_to_value)
 
     class Meta:
         ordering = ("up_to_value",)
