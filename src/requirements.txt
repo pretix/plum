@@ -5,7 +5,9 @@ django-bootstrap4
 django-solo
 django-libsass
 django-context-decorator
+bleach
 whitenoise
+markdown
 
 ipython
 django-extensions

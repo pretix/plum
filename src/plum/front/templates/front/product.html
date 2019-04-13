@@ -1,0 +1,78 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load rich_text %}
+{% load i18n %}
+{% block content %}
+
+    <div class="py-5">
+        <div class="container">
+            <p class="text-secondary">
+                <a href="{% url "front:category" cat=product.category.pk %}" class="text-muted">
+                    {{ product.category }}</a>
+            </p>
+            <h2 class="pb-2">
+                {{ product }}
+                {% if product.stability == "alpha" %}
+                    <span class="badge bg-danger">{% trans "alpha" %}</span>
+                {% elif product.stability == "beta" %}
+                    <span class="badge bg-warning">{% trans "alpha" %}</span>
+                {% endif %}
+                {% if product.certified %}
+                    <span class="badge rounded-pill bg-success" data-toggle="tooltip" title="{% trans "Certified plugin" %}">
+                        <span class="fa fa-check"></span>
+                    </span>
+                {% endif %}
+            </h2>
+            <p>
+                {% blocktrans trimmed with vendor=product.vendor %}
+                    by {{ vendor }}
+                {% endblocktrans %}
+            </p>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            {{ product.long_description|rich_text }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ product.vendor }}
+                                {% if product.vendor.certified %}
+                                    <span class="badge rounded-pill bg-success" data-toggle="tooltip" title="{% trans "Certified vendor" %}">
+                        <span class="fa fa-check"></span>
+                    </span>
+                                {% endif %}
+                            </h5>
+                            <p>
+                                {% if product.vendor.support_contact_email %}
+                                    <span class="fa fa-fw fa-envelope"></span>
+                                    <a href="mailto:{{ product.vendor.support_contact_email }}">
+                                        {{ product.vendor.support_contact_email }}</a>
+                                    <br>
+                                {% endif %}
+                                {% if product.vendor.support_contact_phone %}
+                                    <a href="tel:{{ product.vendor.support_contact_phone }}">
+                                        <span class="fa fa-fw fa-phone"></span>
+                                        {{ product.vendor.support_contact_phone }}</a>
+                                    <br>
+                                {% endif %}
+                                {% if product.vendor.support_contact_url %}
+                                    <span class="fa fa-fw fa-support"></span>
+                                    <a href="{{ product.vendor.support_contact_url }}" target="_blank">{{ product.vendor.support_contact_url }}</a>
+                                {% endif %}
+                            </p>
+                            {% if product.vendor.support_contact_info %}
+                                {{ product.vendor.support_contact_info|rich_text }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

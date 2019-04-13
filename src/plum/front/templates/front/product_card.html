@@ -3,20 +3,22 @@
     <div class="card mb-4 box-shadow">
         <div class="card-body">
             <h5 class="card-title">
-                {{ p.name }}
+                <a href="{% url "front:product" product=p.id %}">
+                    {{ p.name }}</a>
                 {% if p.certified %}
                     <span class="badge rounded-pill bg-success" data-toggle="tooltip" title="{% trans "Certified plugin" %}">
                         <span class="fa fa-check"></span>
                     </span>
                 {% endif %}
             </h5>
-            <p class="card-text text-secondary">
+            <p class="card-text text-muted">
                 {% blocktrans trimmed with vendor=p.vendor %}
                     by {{ vendor }}
                 {% endblocktrans %}
             </p>
             <div class="d-flex justify-content-between align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="#">{% trans "View details" %}</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url "front:product" product=p.id %}">
+                    {% trans "View details" %}</a>
                 <small class="text-muted">
                     {% if p.is_paid %}
                         <span class="text-primary1">

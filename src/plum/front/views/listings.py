@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from django_context_decorator import context
 
 from plum.core.models import Product, Category
@@ -32,3 +32,12 @@ class CategoryPage(ListView):
     @cached_property
     def category(self):
         return get_object_or_404(Category, pk=self.kwargs.get('cat'))
+
+
+class ProductDetail(DetailView):
+    context_object_name = 'product'
+    pk_url_kwarg = 'product'
+    template_name = 'front/product.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(approved=True)
