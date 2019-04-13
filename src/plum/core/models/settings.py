@@ -1,8 +1,11 @@
 from django.db import models
+from pycountry import currencies
 from solo.models import SingletonModel
 
 
 class SiteConfiguration(SingletonModel):
+    CURRENCY_CHOICES = [(c.alpha_3, c.alpha_3 + " - " + c.name) for c in currencies]
+
     site_name = models.CharField(max_length=255, default="pretix Marketplace")
     front_page_intro = models.TextField(
         default="Welcome to the pretix Marketplace! If you're hosting pretix yourself, this is the place where "
@@ -25,6 +28,9 @@ class SiteConfiguration(SingletonModel):
                 '<li><a class="text-muted" href="https://pretix.eu/about/en/privacy">Privacy</a></li>'
                 '</ul>'
     )
+    currency = models.CharField(max_length=10,
+                                choices=CURRENCY_CHOICES,
+                                default="EUR")
 
     def __unicode__(self):
         return u"Site Configuration"

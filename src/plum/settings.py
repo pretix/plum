@@ -328,3 +328,22 @@ STATICFILES_DIRS += [
 ] if os.path.exists(os.path.join(BASE_DIR, 'plum/static')) else []
 
 AUTH_USER_MODEL = 'core.User'
+
+CURRENCY_PLACES = {
+    # default is 2
+    'BIF': 0,
+    'CLP': 0,
+    'DJF': 0,
+    'GNF': 0,
+    'JPY': 0,
+    'KMF': 0,
+    'KRW': 0,
+    'MGA': 0,
+    'PYG': 0,
+    'RWF': 0,
+    'VND': 0,
+    'VUV': 0,
+    'XAF': 0,
+    'XOF': 0,
+    'XPF': 0,
+}

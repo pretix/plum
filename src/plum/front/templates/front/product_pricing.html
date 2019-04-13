@@ -1,0 +1,25 @@
+{% extends "front/product_base.html" %}
+{% load compress %}
+{% load static %}
+{% load money %}
+{% load i18n %}
+{% block inner %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                {% for t in product.tiers.all %}
+                    <div class="col text-center">
+                        <small>{{ t.up_to_value }} {{ product.pricing_tiers_variable }}</small>
+                        <br>
+                        <span class="text-primary">{{ t.price|money:siteconf.currency }}</span>
+                    </div>
+                {% endfor %}
+                <div class="col text-center">
+                    <small>{% trans "Additional pricing" %}</small>
+                    <br>
+                    <a href="mailto:{{ product.vendor.support_contact_email }}">Contact vendor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

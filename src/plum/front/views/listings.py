@@ -41,3 +41,8 @@ class ProductDetail(DetailView):
 
     def get_queryset(self):
         return Product.objects.filter(approved=True)
+
+
+class ProductPricing(ProductDetail):
+    template_name = 'front/product_pricing.html'
+

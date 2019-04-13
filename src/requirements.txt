@@ -8,6 +8,8 @@ django-context-decorator
 bleach
 whitenoise
 markdown
+babel
+pycountry
 
 ipython
 django-extensions
