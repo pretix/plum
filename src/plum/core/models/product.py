@@ -52,14 +52,16 @@ class Product(models.Model):
 
     name = models.CharField(max_length=190, verbose_name=_('Name'))
     slug = models.SlugField(unique=True, verbose_name=_('Slug'))
-    category = models.ForeignKey('Category', verbose_name=_('Product category'), on_delete=models.PROTECT)
-    vendor = models.ForeignKey('Vendor', verbose_name=_('Product vendor'), on_delete=models.PROTECT, null=False)
+    category = models.ForeignKey('Category', verbose_name=_('Product category'), on_delete=models.PROTECT,
+                                 related_name='products')
+    vendor = models.ForeignKey('Vendor', verbose_name=_('Product vendor'), on_delete=models.PROTECT, null=False,
+                               related_name='products')
     long_description = models.TextField(verbose_name=_('Long description'))
     approved = models.BooleanField(default=False, verbose_name=_('Approved and visible'))
     certified = models.BooleanField(default=False, verbose_name=_('Certified plugin'))
 
-    stability = models.CharField(choices=STABILITY_VALUES, max_length=190)
-    delivery_method = models.CharField(choices=DELIVERY_METHODS, max_length=190)
+    stability = models.CharField(choices=STABILITY_VALUES, max_length=190, verbose_name=_('Stability'))
+    delivery_method = models.CharField(choices=DELIVERY_METHODS, max_length=190, verbose_name=_('Delivery method'))
 
     is_paid = models.BooleanField(default=False)
     pricing_tiers_variable = models.ForeignKey('PriceVariable', verbose_name=_('Pricing variable'), null=True,
@@ -67,9 +69,10 @@ class Product(models.Model):
     pricing_timeframe = models.CharField(choices=PRICING_TIMEFRAMES, verbose_name=_('Pricing timeframe'),
                                          null=True, max_length=190, blank=True)
 
-    github_url = models.URLField(blank=True)
-    website_url = models.URLField(blank=True)
-    package_name = models.CharField(blank=False, null=True, unique=True, max_length=190)
+    github_url = models.URLField(blank=True, verbose_name=_('GitHub URL'))
+    website_url = models.URLField(blank=True, verbose_name=_('Website URL'))
+    package_name = models.CharField(blank=False, null=True, unique=True, max_length=190, verbose_name=_('Package name'),
+                                    help_text=_('Should be a valid Python package name. For free packages, this is the name the package should be on on PyPI.'))
 
     class Meta:
         verbose_name = _('Product')

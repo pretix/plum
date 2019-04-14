@@ -7,6 +7,8 @@ class SiteConfiguration(SingletonModel):
     CURRENCY_CHOICES = [(c.alpha_3, c.alpha_3 + " - " + c.name) for c in currencies]
 
     site_name = models.CharField(max_length=255, default="pretix Marketplace")
+    vendor_contact = models.EmailField(default='marketplace@pretix.eu')
+    buyer_contact = models.EmailField(default='support@pretix.eu')
     front_page_intro = models.TextField(
         default="Welcome to the pretix Marketplace! If you're hosting pretix yourself, this is the place where "
                 "you can find plugins to extend your installation. If you use pretix through our pretix Hosted offering, "

@@ -9,5 +9,37 @@
             {% trans "Vendor account:" %} {{ vendor }}
             <a href="{% url "front:vendor.edit" pk=vendor.pk %}" class="btn btn-outline-primary"><span class="fa fa-edit"></span></a>
         </h2>
+        <p class="my-3">
+            <a class="btn btn-outline-primary" href="{% url "front:vendor.product.create" vendor=vendor.pk %}">
+                <span class="fa fa-plus"></span> {% trans "Register a free plugin" %}
+            </a>
+            <a class="btn btn-outline-primary" href="{% url "front:vendor.product.create.paid" vendor=vendor.pk %}">
+                <span class="fa fa-plus"></span> {% trans "Register a paid plugin" %}
+            </a>
+        </p>
+
+        {% for p in vendor.products.all %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10">
+                            <h5 class="card-title">
+                                {{ p }}
+                                {% if not p.approved %}
+                                    <span class="badge rounded-pill bg-dark">{% trans "Draft" %}</span>
+                                {% endif %}
+                            </h5>
+                            <span class="text-muted">{% if p.is_paid %}{% trans "Paid" %}{% else %}{% trans "Free" %}{% endif %}</span>
+                        </div>
+                        <div class="col-2">
+                            <a href="{% url "front:vendor.product.edit" vendor=vendor.pk pk=p.pk %}" class="btn btn-outline-primary btn-block">
+                                <span class="fa fa-edit"></span>
+                                <span class="d-none d-md-inline">{% trans "Edit" %}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

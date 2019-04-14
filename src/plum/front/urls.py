@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^vendor/create$', vendor.Create.as_view(), name="vendor.create"),
     url(r'^vendor/(?P<pk>\d+)/$', vendor.Detail.as_view(), name="vendor.index"),
     url(r'^vendor/(?P<pk>\d+)/edit$', vendor.Edit.as_view(), name="vendor.edit"),
+    url(r'^vendor/(?P<vendor>\d+)/products/create$', vendor.CreateProduct.as_view(), name="vendor.product.create"),
+    url(r'^vendor/(?P<pk>\d+)/products/create_paid$', vendor.CreatePaidProduct.as_view(), name="vendor.product.create.paid"),
+    url(r'^vendor/(?P<vendor>\d+)/products/(?P<pk>\d+)/edit$', vendor.UpdateProduct.as_view(), name="vendor.product.edit"),
 ]

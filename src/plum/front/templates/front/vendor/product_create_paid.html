@@ -1,0 +1,15 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="container my-5 text-center">
+        <h3>{% trans "Oh wow, this is great!" %}</h3>
+        <p>{% trans "We'd love to partner with you to make your plugins shine." %}</p>
+        <p>{% trans "To set up a partnership for paid plugins, please get in touch with our Marketplace team to discuss all details!" %}</p>
+        <a href="mailto:{{ siteconf.vendor_contact }}" class="btn btn-lg btn-success">{% trans "Contact us at" %} {{ siteconf.vendor_contact }}</a>
+    </div>
+
+{% endblock %}

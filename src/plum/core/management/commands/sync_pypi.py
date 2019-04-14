@@ -1,7 +1,6 @@
 import logging
 import requests
 from datetime import datetime
-from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from plum.core.models import Product
@@ -15,7 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for p in Product.objects.filter(delivery_method=Product.DELIVERY_PYPI).exclude(package_name=""):
             try:
-                r = requests.get('https://pypi.org/pypi/{}/json'.format(p.package_name))
+                r = requests.get('https://pypi.org/pypi/{}/json/'.format(p.package_name))
                 r.raise_for_status()
                 d = r.json()
             except:
