@@ -1,0 +1,23 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="container my-5">
+        <h5>{% trans "Create a new business account" %}</h5>
+        <form method="post" action="">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+
+            <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
+                    <button type="submit" value="login" class="btn btn-primary">{% trans "Save" %}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

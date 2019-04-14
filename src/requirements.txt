@@ -5,6 +5,7 @@ django-bootstrap4
 django-solo
 django-libsass
 django-context-decorator
+django-countries
 bleach
 whitenoise
 markdown

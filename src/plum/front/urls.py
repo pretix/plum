@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import auth, listings
+from .views import auth, account, listings
 
 urlpatterns = [
     url(r'^$', listings.IndexView.as_view(), name="index"),
@@ -15,7 +15,11 @@ urlpatterns = [
     url(r'^auth/logout$', auth.Logout.as_view(), name="auth.logout"),
     url(r'^auth/forgot$', auth.PasswordReset.as_view(), name="auth.reset"),
     url(r'^auth/forgot/confirm/(?P<uidb64>[^/]+)/(?P<token>[^/]+)/$', auth.PasswordResetConfirm.as_view(), name="auth.reset.confirm"),
-    url(r'^auth/register', auth.register, name="auth.register"),
-    url(r'^user/', auth.UserIndex.as_view(), name="user.index"),
+    url(r'^auth/register$', auth.register, name="auth.register"),
+    url(r'^user/$', auth.UserIndex.as_view(), name="user.index"),
     url(r'^user/password$', auth.PasswordChange.as_view(), name="user.password"),
+    url(r'^account/create$', account.Create.as_view(), name="account.create"),
+    url(r'^account/(?P<pk>\d+)/$', account.Detail.as_view(), name="account.index"),
+    url(r'^account/(?P<pk>\d+)/edit$', account.Edit.as_view(), name="account.edit"),
+    url(r'^account/(?P<account>\d+)/servers/create$', account.CreateServer.as_view(), name="account.server.create"),
 ]

@@ -1,0 +1,61 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% load humanize %}
+{% block content %}
+    <div class="container py-5">
+        <h2 class="pb-2">
+            {% trans "Business account:" %} {{ account }}
+            <a href="{% url "front:account.edit" pk=account.pk %}" class="btn btn-outline-primary"><span class="fa fa-edit"></span></a>
+        </h2>
+        <h3>{% trans "Servers" %}</h3>
+        <p class="my-3">
+            <a class="btn btn-outline-primary" href="{% url "front:account.server.create" account=account.pk %}">
+                <span class="fa fa-plus"></span> {% trans "Register new server" %}
+            </a>
+        </p>
+        {% for s in account.servers.all %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.url }}</h5>
+                    <strong>{% trans "Licenses" %}</strong>
+
+                    {% for l in s.licenses.all %}
+                        <div class="card my-2">
+                            <div class="card-body">
+                                <strong class="card-title">
+                                    <a href="{% url "front:product" product=l.product.slug %}">
+                                        {{ l.product }}</a>
+                                    {% if l.is_expired %}
+                                        <span class="badge bg-danger">
+                                        {% trans "expired" %}
+                                    </span>
+                                    {% endif %}
+                                </strong>
+                                <span class="d-block text-muted">
+                                {{ l.start_date|date:"SHORT_DATE_FORMAT" }} – {{ l.end_date|date:"SHORT_DATE_FORMAT" }}, up to {{ l.pricing_tier|intcomma }} {{ l.product.pricing_tiers_variable }}
+                                </span>
+                                {% if not l.is_expired %}
+                                    <a data-toggle="collapse" href="#instructions-{{ s.pk }}-{{ l.pk }}">
+                                        {% trans "Show installation instructions" %}
+                                    </a>
+
+                                    <div class="collapse" id="instructions-{{ s.pk }}-{{ l.pk }}">
+                                        <div class="card mt-3">
+        <pre class="card-body my-0"><code>{{ siteconf.pre_install_commands|safe }}
+(venv)$ pip install -U --index-url {{ schema }}://{{ s.pk }}:{{ s.auth_token }}@{{ domain }}{% url "download:pep503.index" %} --extra-index-url https://pypi.python.org/simple {{ l.product.package_name }}
+{{ siteconf.post_install_commands|safe }}</code></pre>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% empty %}
+                        <span class="d-block text-muted">{% trans "No licenses have been bought for this server." %}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

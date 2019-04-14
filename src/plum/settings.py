@@ -352,6 +352,7 @@ CURRENCY_PLACES = {
     'XPF': 0,
 }
 
+LOGIN_URL = 'front:auth.login'
 LOGIN_REDIRECT_URL = 'front:index'
 LOGOUT_REDIRECT_URL = 'front:index'
 MESSAGE_TAGS = {
