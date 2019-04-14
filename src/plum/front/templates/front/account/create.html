@@ -6,7 +6,7 @@
 {% block content %}
 
     <div class="container my-5">
-        <h5>{% trans "Create a new business account" %}</h5>
+        <h2>{% trans "Create a new business account" %}</h2>
         <form method="post" action="">
             {% csrf_token %}
             {% bootstrap_form form layout='horizontal' %}

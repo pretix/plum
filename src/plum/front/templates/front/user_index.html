@@ -3,10 +3,10 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-    <div class="container py-5">
+    <div class="container my-5">
         <h2 class="pb-2">{% trans "Welcome back!" %}</h2>
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-4 mb-lg-0 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{% trans "Business accounts" %}</h5>
@@ -30,7 +30,31 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-lg-4 mb-lg-0 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{% trans "Vendor accounts" %}</h5>
+                        <p class="text-muted">
+                            {% trans "A vendor account is required to submit plugins to this marketplace." %}
+                        </p>
+                        <ul>
+                            {% for b in request.user.vendors.all %}
+                                <li>
+                                    <a href="{% url "front:vendor.index" pk=b.pk %}">
+                                        {{ b.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <p class="mb-0">
+                            <a href="{% url "front:vendor.create" %}" class="btn btn-outline-primary">
+                                <span class="fa fa-plus"></span>
+                                {% trans "Create a new vendor account" %}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-lg-0 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{% trans "User account" %}</h5>

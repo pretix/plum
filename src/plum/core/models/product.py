@@ -13,9 +13,10 @@ class Vendor(models.Model):
     name = models.CharField(max_length=190, verbose_name=_('Name'))
     certified = models.BooleanField(default=False, verbose_name=_('Certified vendor'))
     support_contact_phone = models.CharField(max_length=190, verbose_name=_('Support phone number'), blank=True)
-    support_contact_email = models.EmailField(blank=True, verbose_name=_('Support email address'))
+    support_contact_email = models.EmailField(blank=False, verbose_name=_('Support email address'))
     support_contact_url = models.URLField(blank=True, verbose_name=_('Support form URL'))
     support_contact_info = models.TextField(blank=True, verbose_name=_('Additional support information'))
+    users = models.ManyToManyField('User', related_name='vendors')
 
     def __str__(self):
         return self.name

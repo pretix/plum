@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import auth, account, listings
+from .views import auth, account, listings, vendor
 
 urlpatterns = [
     url(r'^$', listings.IndexView.as_view(), name="index"),
@@ -22,4 +22,7 @@ urlpatterns = [
     url(r'^account/(?P<pk>\d+)/$', account.Detail.as_view(), name="account.index"),
     url(r'^account/(?P<pk>\d+)/edit$', account.Edit.as_view(), name="account.edit"),
     url(r'^account/(?P<account>\d+)/servers/create$', account.CreateServer.as_view(), name="account.server.create"),
+    url(r'^vendor/create$', vendor.Create.as_view(), name="vendor.create"),
+    url(r'^vendor/(?P<pk>\d+)/$', vendor.Detail.as_view(), name="vendor.index"),
+    url(r'^vendor/(?P<pk>\d+)/edit$', vendor.Edit.as_view(), name="vendor.edit"),
 ]
