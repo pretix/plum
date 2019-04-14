@@ -1,5 +1,6 @@
 import configparser
 import os
+from django.contrib import messages
 from urllib.parse import urlparse
 
 import sys
@@ -353,3 +354,9 @@ CURRENCY_PLACES = {
 
 LOGIN_REDIRECT_URL = 'front:index'
 LOGOUT_REDIRECT_URL = 'front:index'
+MESSAGE_TAGS = {
+    messages.INFO: 'alert-info',
+    messages.ERROR: 'alert-danger',
+    messages.WARNING: 'alert-warning',
+    messages.SUCCESS: 'alert-success',
+}

@@ -32,6 +32,15 @@
 </div>
 
 <main role="main">
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message|linebreaksbr }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     {% block content %}
     {% endblock %}
 </main>

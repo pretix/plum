@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^products/(?P<product>[^/]+)/buy$', listings.ProductBuy.as_view(), name="product.buy"),
     url(r'^auth/login$', auth.Login.as_view(), name="auth.login"),
     url(r'^auth/logout$', auth.Logout.as_view(), name="auth.logout"),
+    url(r'^auth/forgot$', auth.PasswordReset.as_view(), name="auth.reset"),
+    url(r'^auth/forgot/confirm/(?P<uidb64>[^/]+)/(?P<token>[^/]+)/$', auth.PasswordResetConfirm.as_view(), name="auth.reset.confirm"),
 ]
