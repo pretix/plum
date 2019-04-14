@@ -1,12 +1,16 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import EmailMultiAlternatives
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DetailView, UpdateView
+from urllib.parse import urljoin
 
-from plum.core.models import Vendor, Product
+from plum.core.models import Vendor, Product, SiteConfiguration
 from plum.front.forms.vendor import VendorForm, ProductForm, UpdateProductForm
 
 
@@ -61,6 +65,7 @@ class CreateProduct(LoginRequiredMixin, CreateView):
             pk=self.kwargs.get('vendor')
         )
 
+    @transaction.atomic
     def form_valid(self, form):
         messages.success(self.request, _('Your product has been created. We will automatically add your releases from PyPI in the next hours. '
                                          'As soon as the plugin has been reviewed by our staff, it will be published.'))
@@ -68,6 +73,14 @@ class CreateProduct(LoginRequiredMixin, CreateView):
         form.instance.is_paid = False
         form.instance.delivery_method = "pypi"
         s = super().form_valid(form)
+
+        sc = SiteConfiguration.objects.get()
+        subject = "New product on {}".format(sc.site_name)
+        body = 'Please review {}'.format(
+            urljoin(settings.SITE_URL, reverse('admin:core_product_change', args=(form.instance.pk,)))
+        )
+        email_message = EmailMultiAlternatives(subject, body, settings.SERVER_EMAIL, [sc.vendor_contact])
+        email_message.send()
         return s
 
     def get_success_url(self):

@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView, ListView, DetailView
@@ -11,7 +12,7 @@ class IndexView(TemplateView):
 
     @context
     def products(self):
-        return Product.objects.filter(approved=True).select_related('vendor', 'category')
+        return Product.objects.filter(approved=True).select_related('vendor', 'category').order_by('-certified', 'name')
 
 
 class CategoriesList(ListView):
@@ -26,7 +27,7 @@ class CategoryPage(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return self.category.product_set.filter(approved=True).select_related('vendor').order_by('name')
+        return self.category.products.filter(approved=True).select_related('vendor').order_by('name')
 
     @context
     @cached_property
@@ -40,7 +41,9 @@ class ProductDetail(DetailView):
     template_name = 'front/product.html'
 
     def get_queryset(self):
-        return Product.objects.filter(approved=True)
+        return Product.objects.filter(
+            Q(approved=True) | Q(vendor__users__in=[self.request.user])
+        )
 
 
 class ProductPricing(ProductDetail):

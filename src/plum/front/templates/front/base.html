@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>{{ siteconf.site_name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% compress css %}
         <link rel="stylesheet" href="{% static "front/scss/main.scss" %}" type="text/x-scss">
     {% endcompress %}
@@ -38,7 +39,7 @@
 
 <main role="main">
     {% if messages %}
-        <div class="container">
+        <div class="container mt-5">
             {% for message in messages %}
                 <div class="alert {{ message.tags }}">
                     {{ message|linebreaksbr }}
@@ -57,7 +58,7 @@
                 {{ siteconf.site_name }}
                 <small class="d-block text-muted">&copy; {% now "Y" %}</small>
                 <small class="d-block mb-3">
-                    <a href="https://github.com/pretix/plum" class="text-muted">powered by plum</a>
+                    <a href="https://github.com/pretix/plum" class="text-muted">powered by plum (AGPLv3)</a>
                 </small>
             </div>
             <div class="col-6 col-md">

@@ -13,7 +13,7 @@
             <a class="btn btn-outline-primary" href="{% url "front:vendor.product.create" vendor=vendor.pk %}">
                 <span class="fa fa-plus"></span> {% trans "Register a free plugin" %}
             </a>
-            <a class="btn btn-outline-primary" href="{% url "front:vendor.product.create.paid" vendor=vendor.pk %}">
+            <a class="btn btn-outline-primary" href="{% url "front:vendor.product.create.paid" pk=vendor.pk %}">
                 <span class="fa fa-plus"></span> {% trans "Register a paid plugin" %}
             </a>
         </p>
@@ -24,7 +24,8 @@
                     <div class="row">
                         <div class="col-10">
                             <h5 class="card-title">
-                                {{ p }}
+                                <a href="{% url "front:product" product=p.slug %}">
+                                    {{ p }}</a>
                                 {% if not p.approved %}
                                     <span class="badge rounded-pill bg-dark">{% trans "Draft" %}</span>
                                 {% endif %}
