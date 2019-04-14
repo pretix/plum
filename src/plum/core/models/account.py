@@ -1,9 +1,13 @@
 # users/models.py
 import os
+import pytz
 import uuid
+from django.conf import settings
 
 from django.db import models
+from django.db.models import Exists, OuterRef
 from django.utils.crypto import get_random_string
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -28,3 +32,23 @@ class Server(models.Model):
 
     def __str__(self):
         return self.url
+
+    def packages_with_active_license(self):
+        from .product import Product
+        from .license import License
+
+        tz = pytz.timezone(settings.TIME_ZONE)
+        today = now().astimezone(tz).date()
+
+        return Product.objects.annotate(
+            has_license=Exists(
+                License.objects.filter(
+                    servers__in=[self],
+                    start_date__lte=today,
+                    end_date__gte=today,
+                    product_id=OuterRef('pk')
+                )
+            )
+        ).filter(
+            has_license=True
+        )

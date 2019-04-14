@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    {% for p in products %}
+        <a href="{% url "download:pep503.package" package=p.package_name %}">{{ p.package_name }}</a>
+    {% endfor %}
+  </body>
+</html>

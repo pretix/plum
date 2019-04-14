@@ -1,9 +1,12 @@
 # users/models.py
+import hashlib
 import os
+import re
 import uuid
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from functools import partial
 
 
 class Vendor(models.Model):
@@ -65,7 +68,7 @@ class Product(models.Model):
 
     github_url = models.URLField(blank=True)
     website_url = models.URLField(blank=True)
-    pypi_name = models.CharField(blank=True, max_length=190)
+    package_name = models.CharField(blank=False, null=True, unique=True, max_length=190)
 
     class Meta:
         verbose_name = _('Product')
@@ -77,6 +80,11 @@ class Product(models.Model):
     @property
     def visible_tiers(self):
         return self.tiers.filter(visible=True)
+
+    def save(self, *args, **kwargs):
+        if self.package_name:
+            self.package_name = re.sub(r"[-_.]+", "-", self.package_name).lower()
+        return super().save(*args, **kwargs)
 
 
 def screenshot_filename(instance, filename):
@@ -104,6 +112,8 @@ class ProductVersion(models.Model):
 
     deliverable_url = models.URLField(blank=True)
     deliverable_file = models.FileField(null=True, upload_to=deliverable_filename, blank=True)
+    deliverable_file_checksum = models.CharField(blank=True, max_length=255)
+    deliverable_file_name = models.CharField(blank=True, max_length=255)
 
     min_platform_version = models.ForeignKey('PlatformVersion', on_delete=models.PROTECT, related_name='products_from',
                                              verbose_name=_('Minimum platform version'), null=True, blank=True)
@@ -112,6 +122,14 @@ class ProductVersion(models.Model):
 
     class Meta:
         ordering = ("-release_date",)
+
+    def save(self, *args, **kwargs):
+        if self.deliverable_file and not self.deliverable_file_checksum:
+            hasher = hashlib.sha256()
+            for buf in iter(partial(self.deliverable_file.read, 65536), b''):
+                hasher.update(buf)
+            self.deliverable_file_checksum = hasher.hexdigest()
+        return super().save(*args, **kwargs)
 
 
 class ProductPriceTier(models.Model):

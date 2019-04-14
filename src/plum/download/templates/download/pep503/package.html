@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% for v in product.versions.all %}
+    {% if v.deliverable_file %}
+        <a href="{% url "download:pep503.download" package=product.package_name version=v.pk name=v.deliverable_file_name %}">{{ v.deliverable_file_name }}</a>
+    {% endif %}
+{% endfor %}
+</body>
+</html>

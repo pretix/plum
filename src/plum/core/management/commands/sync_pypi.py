@@ -13,9 +13,9 @@ class Command(BaseCommand):
     help = "Automatically add new versions of PyPI packages"
 
     def handle(self, *args, **options):
-        for p in Product.objects.filter(delivery_method=Product.DELIVERY_PYPI).exclude(pypi_name=""):
+        for p in Product.objects.filter(delivery_method=Product.DELIVERY_PYPI).exclude(package_name=""):
             try:
-                r = requests.get('https://pypi.org/pypi/{}/json'.format(p.pypi_name))
+                r = requests.get('https://pypi.org/pypi/{}/json'.format(p.package_name))
                 r.raise_for_status()
                 d = r.json()
             except:

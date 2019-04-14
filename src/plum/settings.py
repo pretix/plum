@@ -121,6 +121,7 @@ INSTALLED_APPS = [
     'compressor',
     'plum.core',
     'plum.front',
+    'plum.download',
     'django.contrib.admin.apps.SimpleAdminConfig',
 ]
 

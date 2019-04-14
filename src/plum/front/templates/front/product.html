@@ -64,10 +64,10 @@
                     </div>
                 </div>
             {% endif %}
-            {% if product.pypi_name %}
+            {% if product.package_name and product.delivery_method == "pypi" %}
                 <div class="card mt-4">
                     <div class="card-body">
-                        <a href="https://pypi.python.org/pypi/PySide{{ product.pypi_name }}" target="_blank">
+                        <a href="https://pypi.python.org/pypi/{{ product.package_name }}" target="_blank">
                             <span class="fa fa-python fa-fw"></span> {% trans "View on PyPI" %}
                         </a>
                     </div>
