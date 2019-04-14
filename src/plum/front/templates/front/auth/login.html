@@ -16,6 +16,7 @@
                     <button type="submit" value="login" class="btn btn-primary">{% trans "Log in" %}</button>
                     <input type="hidden" name="next" value="{{ next }}">
                     <div class="form-text text-muted">
+                        <a href="{% url 'front:auth.register' %}">{% trans "Register" %}</a> ·
                         <a href="{% url 'front:auth.reset' %}">{% trans "Lost password?" %}</a>
                     </div>
                 </div>

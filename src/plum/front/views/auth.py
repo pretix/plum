@@ -1,11 +1,14 @@
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
-from plum.core.models import SiteConfiguration
+from plum.core.models import SiteConfiguration, User
+from plum.front.forms.auth import RegistrationForm
 
 
 class Login(LoginView):
@@ -53,3 +56,22 @@ class PasswordChange(LoginRequiredMixin, PasswordChangeView):
 
 class UserIndex(LoginRequiredMixin, TemplateView):
     template_name = "front/user_index.html"
+
+
+def register(request):
+    ctx = {}
+    if request.user.is_authenticated:
+        return redirect(request.GET.get("next", 'control:index'))
+    if request.method == 'POST':
+        form = RegistrationForm(data=request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                form.cleaned_data['email'],
+                form.cleaned_data['password'],
+            )
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('front:user.index')
+    else:
+        form = RegistrationForm()
+    ctx['form'] = form
+    return render(request, 'front/auth/register.html', ctx)
