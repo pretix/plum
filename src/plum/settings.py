@@ -118,6 +118,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'rest_framework',
     'solo',
+    'bootstrap4',
     'compressor',
     'plum.core',
     'plum.front',
@@ -349,3 +350,6 @@ CURRENCY_PLACES = {
     'XOF': 0,
     'XPF': 0,
 }
+
+LOGIN_REDIRECT_URL = 'front:index'
+LOGOUT_REDIRECT_URL = 'front:index'

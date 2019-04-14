@@ -1,5 +1,6 @@
 from django.contrib.admin import AdminSite, ModelAdmin, TabularInline, StackedInline
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import ugettext_lazy as _
 from solo.admin import SingletonModelAdmin
 
 from ..models import PlatformVersion, PriceVariable, Category, Product, ProductPriceTier, ProductScreenshot, ProductVersion, Vendor, SiteConfiguration, Server, \
@@ -58,6 +59,26 @@ class LicenseAdmin(ModelAdmin):
     search_fields = ['product__name', 'account__name']
 
 
+class CustomUserAdmin(UserAdmin):
+    ordering = ['email']
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    search_fields = ('first_name', 'last_name', 'email')
+
+
 site = PlumAdminSite(name='admin')
 site.register(PlatformVersion, VersionAdmin)
 site.register(PriceVariable)
@@ -67,4 +88,4 @@ site.register(Product, ProductAdmin)
 site.register(SiteConfiguration, SingletonModelAdmin)
 site.register(Account, AccountAdmin)
 site.register(License, LicenseAdmin)
-site.register(User, UserAdmin)
+site.register(User, CustomUserAdmin)
