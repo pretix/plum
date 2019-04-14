@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^auth/logout$', auth.Logout.as_view(), name="auth.logout"),
     url(r'^auth/forgot$', auth.PasswordReset.as_view(), name="auth.reset"),
     url(r'^auth/forgot/confirm/(?P<uidb64>[^/]+)/(?P<token>[^/]+)/$', auth.PasswordResetConfirm.as_view(), name="auth.reset.confirm"),
+    url(r'^user/', auth.UserIndex.as_view(), name="user.index"),
+    url(r'^user/password$', auth.PasswordChange.as_view(), name="user.password"),
 ]
