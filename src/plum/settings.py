@@ -130,6 +130,7 @@ INSTALLED_APPS = [
     'solo',
     'bootstrap4',
     'compressor',
+    'djangoformsetjs',
     'plum.core',
     'plum.front',
     'plum.download',

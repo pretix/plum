@@ -28,6 +28,10 @@
                         <span class="fa fa-check"></span>
                     </span>
                     {% endif %}
+
+                    {% if product.vendor in request.user.vendors.all %}
+                        <a href="{% url "front:vendor.product.edit" vendor=product.vendor.pk pk=product.pk %}" class="btn btn-outline-primary"><span class="fa fa-edit"></span></a>
+                    {% endif %}
                 </h2>
             </div>
             <div class="col-md-2">

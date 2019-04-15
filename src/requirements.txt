@@ -6,6 +6,7 @@ django-solo
 django-libsass
 django-context-decorator
 django-countries
+django-formset-js-improved
 bleach
 whitenoise
 markdown
@@ -13,6 +14,7 @@ babel
 pycountry
 requests
 sentry-sdk==0.7.10
+pillow
 
 # dev 
 ipython

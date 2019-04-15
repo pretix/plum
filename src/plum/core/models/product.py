@@ -97,8 +97,8 @@ def screenshot_filename(instance, filename):
 
 class ProductScreenshot(models.Model):
     product = models.ForeignKey(Product, related_name='screenshots', on_delete=models.CASCADE)
-    picture = models.FileField(verbose_name=_('Picture'), upload_to=screenshot_filename)
-    title = models.CharField(max_length=190, verbose_name=_('title'))
+    picture = models.ImageField(verbose_name=_('Picture'), upload_to=screenshot_filename, blank=False)
+    title = models.CharField(max_length=190, verbose_name=_('title'), blank=False)
 
     class Meta:
         verbose_name = _('Screenshot')

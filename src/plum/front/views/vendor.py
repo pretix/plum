@@ -3,15 +3,17 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import EmailMultiAlternatives
 from django.db import transaction
+from django.forms import inlineformset_factory
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, DetailView, UpdateView
+from django_context_decorator import context
 from urllib.parse import urljoin
 
-from plum.core.models import Vendor, Product, SiteConfiguration
-from plum.front.forms.vendor import VendorForm, ProductForm, UpdateProductForm
+from plum.core.models import Vendor, Product, SiteConfiguration, ProductScreenshot
+from plum.front.forms.vendor import VendorForm, ProductForm, UpdateProductForm, ScreenshotForm
 
 
 class Create(LoginRequiredMixin, CreateView):
@@ -86,6 +88,29 @@ class CreateProduct(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse("front:vendor.index", kwargs={'pk': self.vendor.pk})
 
+    @context
+    @cached_property
+    def formset(self):
+        formsetclass = inlineformset_factory(
+            Product, ProductScreenshot,
+            form=ScreenshotForm,
+            can_order=False, can_delete=True, extra=0
+        )
+        return formsetclass(self.request.POST if self.request.method == "POST" else None,
+                            self.request.FILES if self.request.method == "POST" else None)
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid() and self.formset.is_valid():
+            with transaction.atomic():
+                r = self.form_valid(form)
+                for f in self.formset:
+                    f.instance.product = self.object
+                    f.save()
+                return r
+        return self.form_invalid(form)
+
 
 class UpdateProduct(LoginRequiredMixin, UpdateView):
     model = Product
@@ -106,3 +131,26 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse("front:vendor.index", kwargs={'pk': self.vendor.pk})
+
+    @context
+    @cached_property
+    def formset(self):
+        formsetclass = inlineformset_factory(
+            Product, ProductScreenshot,
+            form=ScreenshotForm,
+            can_order=False, can_delete=True, extra=0
+        )
+        return formsetclass(self.request.POST if self.request.method == "POST" else None,
+                            self.request.FILES if self.request.method == "POST" else None,
+                            instance=self.object)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid() and self.formset.is_valid():
+            with transaction.atomic():
+                for f in self.formset:
+                    f.instance.product = self.object
+                    f.save()
+                return self.form_valid(form)
+        return self.form_invalid(form)
