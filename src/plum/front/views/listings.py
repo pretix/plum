@@ -4,7 +4,7 @@ from django.utils.functional import cached_property
 from django.views.generic import TemplateView, ListView, DetailView
 from django_context_decorator import context
 
-from plum.core.models import Product, Category
+from plum.core.models import Product, Category, Vendor
 
 
 class IndexView(TemplateView):
@@ -22,7 +22,6 @@ class CategoriesList(ListView):
 
 
 class CategoryPage(ListView):
-    queryset = Category.objects.order_by('name')
     template_name = 'front/category.html'
     context_object_name = 'products'
 
@@ -33,6 +32,19 @@ class CategoryPage(ListView):
     @cached_property
     def category(self):
         return get_object_or_404(Category, pk=self.kwargs.get('cat'))
+
+
+class VendorPage(ListView):
+    template_name = 'front/vendor.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return self.vendor.products.filter(approved=True).select_related('vendor').order_by('name')
+
+    @context
+    @cached_property
+    def vendor(self):
+        return get_object_or_404(Vendor, pk=self.kwargs.get('pk'))
 
 
 class ProductDetail(DetailView):

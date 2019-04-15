@@ -16,11 +16,12 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">
-                        {{ product.vendor }}
+                        <a href="{% url "front:vendor" pk=product.vendor.pk %}">
+                            {{ product.vendor }}</a>
                         {% if product.vendor.certified %}
                             <span class="badge rounded-pill bg-success" data-toggle="tooltip" title="{% trans "Certified vendor" %}">
-                        <span class="fa fa-check"></span>
-                    </span>
+                                <span class="fa fa-check"></span>
+                            </span>
                         {% endif %}
                     </h5>
                     <p>
