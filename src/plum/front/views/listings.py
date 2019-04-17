@@ -55,7 +55,7 @@ class ProductDetail(DetailView):
     def get_queryset(self):
         return Product.objects.filter(
             Q(approved=True) | Q(vendor__users__in=[self.request.user])
-        )
+        ).distinct()
 
 
 class ProductPricing(ProductDetail):
