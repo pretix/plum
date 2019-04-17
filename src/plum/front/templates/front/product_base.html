@@ -74,12 +74,14 @@
                     </a>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == "product.versions" %}active{% endif %}"
-                   href="{% url "front:product.versions" product=product.slug %}">
-                    {% trans "Versions" %}
-                </a>
-            </li>
+            {% if product.delivery_method != "bundled" %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == "product.versions" %}active{% endif %}"
+                       href="{% url "front:product.versions" product=product.slug %}">
+                        {% trans "Versions" %}
+                    </a>
+                </li>
+            {% endif %}
         </ul>
         {% block inner %}{% endblock %}
     </div>
