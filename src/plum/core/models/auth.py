@@ -15,10 +15,10 @@ class User(AbstractUser):
         def _create_user(email, password, **extra_fields):
             if not email:
                 raise ValueError('The given email must be set')
-            email = self.normalize_email(email)
+            email = User.objects.normalize_email(email)
             user = User(email=email, **extra_fields)
             user.set_password(password)
-            user.save(using=self._db)
+            user.save()
             return user
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
