@@ -32,7 +32,7 @@ class PasswordReset(PasswordResetView):
     @property
     def extra_email_context(self):
         return {
-            'siteconf': SiteConfiguration.objects.get()
+            'siteconf': SiteConfiguration.get_solo()
         }
 
 

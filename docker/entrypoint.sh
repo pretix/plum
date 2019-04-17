@@ -20,7 +20,6 @@ fi
 if [ "$1" == "init" ]; then
 	python3 manage.py collectstatic --noinput
 	python3 manage.py compress
-	python3 manage.py compilemessages
 	exit 0
 fi
 

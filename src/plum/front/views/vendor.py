@@ -74,7 +74,7 @@ class CreateProduct(LoginRequiredMixin, CreateView):
         form.instance.delivery_method = "pypi"
         s = super().form_valid(form)
 
-        sc = SiteConfiguration.objects.get()
+        sc = SiteConfiguration.get_solo()
         subject = "New product on {}".format(sc.site_name)
         body = 'Please review {}'.format(
             urljoin(settings.SITE_URL, reverse('admin:core_product_change', args=(form.instance.pk,)))
