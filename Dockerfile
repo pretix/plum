@@ -26,7 +26,7 @@ RUN python3 /tmp/get-pip.py
 COPY src/requirements.txt /tmp/requirements.txt
 RUN pip install gunicorn -Ur /tmp/requirements.txt
 
-ENV DATA_DIR /data
+ENV PLUM_DATA_DIR /data
 RUN mkdir /code/plum
 COPY src /code/plum/src
 COPY docker/entrypoint.sh /usr/local/bin/plum
