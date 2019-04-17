@@ -9,7 +9,7 @@
         {% trans "In a standard setup, you can install this plugin like this:" %}
         <div class="card my-3">
         <pre class="card-body my-0"><code>{{ siteconf.pre_install_commands|safe }}
-(venv)$ pip install {{ product.pypi_name }}
+(venv)$ pip install {{ product.package_name }}
 {{ siteconf.post_install_commands|safe }}</code></pre>
         </div>
         <p>
