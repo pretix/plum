@@ -53,9 +53,14 @@ class ProductDetail(DetailView):
     template_name = 'front/product.html'
 
     def get_queryset(self):
-        return Product.objects.filter(
-            Q(approved=True) | Q(vendor__users__in=[self.request.user])
-        ).distinct()
+        if self.request.user.is_authenticated:
+            return Product.objects.filter(
+                Q(approved=True) | Q(vendor__users__pk__in=[self.request.user.pk])
+            ).distinct()
+        else:
+            return Product.objects.filter(
+                Q(approved=True)
+            ).distinct()
 
 
 class ProductPricing(ProductDetail):
