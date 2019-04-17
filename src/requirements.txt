@@ -12,6 +12,7 @@ markdown
 babel
 pycountry
 requests
+sentry-sdk==0.7.10
 
 # dev 
 ipython

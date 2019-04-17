@@ -80,6 +80,15 @@ if os.getenv('PLUM_COOKIE_DOMAIN', ''):
 
 SESSION_COOKIE_SECURE = os.getenv('PLUM_HTTPS', 'True' if SITE_URL.startswith('https:') else 'False') == 'True'
 
+if os.getenv('PLUM_SENTRY_DSN', ''):
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=os.getenv('PLUM_SENTRY_DSN', ''),
+        integrations=[DjangoIntegration()]
+    )
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
