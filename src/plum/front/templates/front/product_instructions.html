@@ -18,5 +18,9 @@
         <a href="{{ siteconf.doc_installation }}" class="btn btn-outline-primary">
             <span class="fa fa-book"></span> {% trans "Read documentation" %}
         </a>
+    {% elif product.delivery_method == "bundled" %}
+        <div class="alert alert-info">
+            {% trans "This product is bundled with all recent pretix installations. You're already good to go!" %}
+        </div>
     {% endif %}
 {% endblock %}

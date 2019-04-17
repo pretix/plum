@@ -25,9 +25,11 @@ class Vendor(models.Model):
 class Product(models.Model):
     DELIVERY_PYPI = 'pypi'
     DELIVERY_LOCALPIP = 'pip'
+    DELIVERY_BUNDLED = 'bundled'
     DELIVERY_METHODS = (
         (DELIVERY_PYPI, _('PyPI')),
         (DELIVERY_LOCALPIP, _('Local python package index')),
+        (DELIVERY_BUNDLED, _('Bundled')),
     )
 
     TIMEFRAME_MONTHLY = 'monthly'

@@ -40,6 +40,11 @@
                         <span class="fa fa-shopping-cart"></span>
                         {% trans "Buy" %}
                     </a>
+                {% elif product.delivery_method == "bundled" %}
+                    <button type="button" class="btn btn-outline-success btn-block" disabled="">
+                        <span class="fa fa-check"></span>
+                        {% trans "Bundled" %}
+                    </button>
                 {% else %}
                     <a href="{% url "front:product.instructions" product=product.slug %}" class="btn btn-outline-success btn-block">
                         <span class="fa fa-download"></span>
