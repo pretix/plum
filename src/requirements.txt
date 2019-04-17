@@ -13,5 +13,10 @@ babel
 pycountry
 requests
 
+# dev 
 ipython
 django-extensions
+
+# prod
+psycopg2
+django-redis

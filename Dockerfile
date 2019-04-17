@@ -24,7 +24,7 @@ COPY docker/get-pip.py /tmp/get-pip.py
 RUN python3 /tmp/get-pip.py
 
 COPY src/requirements.txt /tmp/requirements.txt
-RUN pip install gunicorn slimit csscompressor psycopg2 -Ur /tmp/requirements.txt
+RUN pip install gunicorn -Ur /tmp/requirements.txt
 
 ENV DATA_DIR /data
 RUN mkdir /code/plum
