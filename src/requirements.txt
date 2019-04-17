@@ -21,3 +21,5 @@ django-extensions
 # prod
 psycopg2
 django-redis
+csscompressor
+slimit
