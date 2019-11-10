@@ -50,7 +50,8 @@ class Product(models.Model):
     STABILITY_VALUES = (
         (STABILITY_ALPHA, _('alpha')),
         (STABILITY_BETA, _('beta')),
-        (STABILITY_STABLE, _('stable'))
+        (STABILITY_STABLE, _('stable')),
+        (STABILITY_DISCONTINUED, _('discontinued')),
     )
 
     name = models.CharField(max_length=190, verbose_name=_('Name'))
