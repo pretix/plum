@@ -14,12 +14,16 @@
         <div class="row">
             <div class="col-md-10">
                 <h2 class="pb-2">
+					{% if product.discontinued %}<del>{% endif %}
                     {{ product }}
+					{% if product.discontinued %}</del>{% endif %}
                     {% if not product.approved %}
                         <span class="badge rounded-pill bg-dark">{% trans "Draft" %}</span>
                     {% endif %}
                     {% if product.stability == "alpha" %}
                         <span class="badge bg-danger">{% trans "alpha" %}</span>
+                    {% elif product.stability == "discontinzed" %}
+                        <span class="badge bg-warning">{% trans "discontinued" %}</span>
                     {% elif product.stability == "beta" %}
                         <span class="badge bg-warning">{% trans "beta" %}</span>
                     {% endif %}

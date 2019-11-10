@@ -45,6 +45,7 @@ class Product(models.Model):
     STABILITY_ALPHA = 'alpha'
     STABILITY_BETA = 'beta'
     STABILITY_STABLE = 'stable'
+    STABILITY_DISCONTINUED = 'discontinued'
 
     STABILITY_VALUES = (
         (STABILITY_ALPHA, _('alpha')),
