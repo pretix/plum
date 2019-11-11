@@ -150,6 +150,8 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
         if form.is_valid() and self.formset.is_valid():
             with transaction.atomic():
                 for f in self.formset:
+                    if f in self.formset.deleted_forms:
+                        continue
                     f.instance.product = self.object
                     f.save()
                 return self.form_valid(form)
