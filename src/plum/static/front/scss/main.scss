@@ -3,5 +3,12 @@ $fa-font-path:   "../../vendor/forkawesome/fonts";
 @import "_variables";
 @import "../../vendor/bootstrap/scss/bootstrap";
 @import "../../vendor/forkawesome/fork-awesome";
+@import "../../vendor/ekko-lightbox/ekko-lightbox";
 
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.thumbnails {
+  margin-bottom: 1.5rem;
+  img {
+    margin-right: 5px;
+  }
+}

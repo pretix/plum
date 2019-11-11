@@ -134,8 +134,15 @@ INSTALLED_APPS = [
     'plum.core',
     'plum.front',
     'plum.download',
+    'easy_thumbnails',
     'django.contrib.admin.apps.SimpleAdminConfig',
 ]
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'screen': {'size': (120, 120), 'crop': True},
+    },
+}
 
 try:
     import django_extensions  # noqa

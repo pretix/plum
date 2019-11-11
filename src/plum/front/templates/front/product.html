@@ -3,9 +3,21 @@
 {% load static %}
 {% load rich_text %}
 {% load i18n %}
+{% load thumbnail %}
 {% block inner %}
     <div class="row">
         <div class="col-md-8">
+
+            {% if product.screenshots %}
+                <div class="thumbnails">
+                    {% for s in product.screenshots.all %}
+                        <a href="{{ s.picture.url }}" data-toggle="lightbox" data-gallery="product">
+                            <img src="{{ s.picture|thumbnail_url:"screen" }}" title="{{ s.title }}" alt="{{ s.title }}"
+                                 class="img-thumbnail">
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
             <div class="card">
                 <div class="card-body">
                     {{ product.long_description|rich_text }}
@@ -19,7 +31,8 @@
                         <a href="{% url "front:vendor" pk=product.vendor.pk %}">
                             {{ product.vendor }}</a>
                         {% if product.vendor.certified %}
-                            <span class="badge rounded-pill bg-success" data-toggle="tooltip" title="{% trans "Certified vendor" %}">
+                            <span class="badge rounded-pill bg-success" data-toggle="tooltip"
+                                  title="{% trans "Certified vendor" %}">
                                 <span class="fa fa-check"></span>
                             </span>
                         {% endif %}
@@ -39,7 +52,8 @@
                         {% endif %}
                         {% if product.vendor.support_contact_url %}
                             <span class="fa fa-fw fa-support"></span>
-                            <a href="{{ product.vendor.support_contact_url }}" target="_blank">{{ product.vendor.support_contact_url }}</a>
+                            <a href="{{ product.vendor.support_contact_url }}"
+                               target="_blank">{{ product.vendor.support_contact_url }}</a>
                         {% endif %}
                     </p>
                     {% if product.vendor.support_contact_info %}
