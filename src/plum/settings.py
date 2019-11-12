@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'plum.core',
     'plum.front',
     'plum.download',
+    'plum.upload',
     'easy_thumbnails',
     'django.contrib.admin.apps.SimpleAdminConfig',
 ]

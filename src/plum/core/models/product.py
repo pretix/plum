@@ -5,6 +5,7 @@ import re
 import uuid
 
 from django.db import models
+from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 from functools import partial
 
@@ -20,6 +21,10 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def gen_upload_key(*args):
+    return get_random_string(length=64)
 
 
 class Product(models.Model):
@@ -77,6 +82,8 @@ class Product(models.Model):
     website_url = models.URLField(blank=True, verbose_name=_('Website URL'))
     package_name = models.CharField(blank=False, null=True, unique=True, max_length=190, verbose_name=_('Package name'),
                                     help_text=_('Should be a valid Python package name. For free packages, this is the name the package should be on on PyPI.'))
+
+    upload_key = models.CharField(max_length=64, default=gen_upload_key)
 
     class Meta:
         verbose_name = _('Product')

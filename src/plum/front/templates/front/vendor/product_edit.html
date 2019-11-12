@@ -33,7 +33,8 @@
                                     {% bootstrap_field f.picture layout='inline' form_group_class="" %}
                                 </div>
                                 <div class="col-md-1 my-2">
-                                    <button class="btn btn-block btn-outline-danger" data-formset-delete-button type="button">
+                                    <button class="btn btn-block btn-outline-danger" data-formset-delete-button
+                                            type="button">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>
@@ -48,13 +49,14 @@
                                     {% bootstrap_field formset.empty_form.DELETE form_group_class="" layout="inline" %}
                                 </div>
                                 <div class="col-md-6 my-2">
-                                   {% bootstrap_field formset.empty_form.title layout='inline' form_group_class="" %}
+                                    {% bootstrap_field formset.empty_form.title layout='inline' form_group_class="" %}
                                 </div>
                                 <div class="col-md-5 my-2">
                                     {% bootstrap_field formset.empty_form.picture layout='inline' form_group_class="" %}
                                 </div>
                                 <div class="col-md-1 my-2">
-                                    <button class="btn btn-block btn-outline-danger" data-formset-delete-button type="button">
+                                    <button class="btn btn-block btn-outline-danger" data-formset-delete-button
+                                            type="button">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>
@@ -74,6 +76,14 @@
                 </div>
             </div>
         </form>
+        {% if product.delivery_method == "pip" %}
+            <h3>{% trans "Version upload API" %}</h3>
+            <p>{% trans "You can upload your package like this:" %}</p>
+            <div class="card">
+                <pre class="card-body my-0"><code>curl {{ settings.SITE_URL }}{% url "upload:upload.upload" %} -u {{ product.slug }}:{{ product.upload_key }} -F 'file=@path/to/your.whl'</code></pre>
+            </div>
+            </div>
+        {% endif %}
     </div>
 
 
