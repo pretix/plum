@@ -81,7 +81,7 @@ class Product(models.Model):
     github_url = models.URLField(blank=True, verbose_name=_('GitHub URL'))
     website_url = models.URLField(blank=True, verbose_name=_('Website URL'))
     package_name = models.CharField(blank=False, null=True, unique=True, max_length=190, verbose_name=_('Package name'),
-                                    help_text=_('Should be a valid Python package name. For free packages, this is the name the package should be on on PyPI.'))
+                                    help_text=_('Should be a valid Python package name. For free packages, this is the name the package should have on on PyPI.'))
 
     upload_key = models.CharField(max_length=64, default=gen_upload_key)
 
