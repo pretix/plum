@@ -61,7 +61,7 @@ class UserIndex(LoginRequiredMixin, TemplateView):
 def register(request):
     ctx = {}
     if request.user.is_authenticated:
-        return redirect(request.GET.get("next", 'control:index'))
+        return redirect(request.GET.get("next", 'front:index'))
     if request.method == 'POST':
         form = RegistrationForm(data=request.POST)
         if form.is_valid():
