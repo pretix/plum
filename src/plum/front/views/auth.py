@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
@@ -26,7 +28,17 @@ class PasswordReset(PasswordResetView):
     success_url = reverse_lazy('front:auth.login')
 
     def form_valid(self, form):
-        messages.success(self.request, _('Great, we\'ll send you an email.'))
+        email = form.cleaned_data["email"]
+        messages.success(self.request, _('Great, we\'ll send you an email. Note that we will not send out multiple'
+                                         'emails within 24 hours.'))
+        has_redis = settings.HAS_REDIS
+        if has_redis:
+            from django_redis import get_redis_connection
+            rc = get_redis_connection("redis")
+            if rc.exists('plum_pwreset_%s' % email):
+                return HttpResponseRedirect(self.get_success_url())
+            else:
+                rc.setex('plum_pwreset_%s' % email, 3600 * 24, '1')
         return super().form_valid(form)
 
     @property
