@@ -34,7 +34,7 @@ class PasswordReset(PasswordResetView):
         has_redis = settings.HAS_REDIS
         if has_redis:
             from django_redis import get_redis_connection
-            rc = get_redis_connection("redis")
+            rc = get_redis_connection("default")
             if rc.exists('plum_pwreset_%s' % email):
                 return HttpResponseRedirect(self.get_success_url())
             else:
