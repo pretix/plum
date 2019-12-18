@@ -1,4 +1,4 @@
-django==2.2.*
+django>=2.2.9,<3.0
 djangorestframework==3.9.*
 django-compressor
 django-bootstrap4
