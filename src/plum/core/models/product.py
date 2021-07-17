@@ -139,7 +139,7 @@ class ProductVersion(models.Model):
                                              verbose_name=_('Maximum platform version'), null=True, blank=True)
 
     class Meta:
-        ordering = ("-release_date",)
+        ordering = ("-release_date", "-pk")
 
     def save(self, *args, **kwargs):
         if self.deliverable_file and not self.deliverable_file_checksum:
