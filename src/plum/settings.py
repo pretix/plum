@@ -119,6 +119,8 @@ if HAS_REDIS:
     else:
         SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
