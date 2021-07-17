@@ -20,7 +20,11 @@
         </a>
     {% elif product.delivery_method == "bundled" %}
         <div class="alert alert-info">
-            {% trans "This product is bundled with all recent pretix installations. You're already good to go!" %}
+            {% trans "This product is bundled with all recent platform installations. You're already good to go!" %}
+        </div>
+    {% elif product.delivery_method == "file" %}
+        <div class="alert alert-info">
+            {% trans 'Go to the "Versions" tab and download the most recent version.' %}
         </div>
     {% endif %}
 {% endblock %}

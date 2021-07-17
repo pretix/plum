@@ -12,3 +12,7 @@ $fa-font-path:   "../../vendor/forkawesome/fonts";
     margin-right: 5px;
   }
 }
+
+.card-body p:last-child {
+  margin-bottom: 0;
+}

@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, DetailView
 from django_context_decorator import context
 
 from plum.core.models import Product, Server
+from plum.download.licenses import packages_with_active_license
 
 
 class ServerAuthView:
@@ -36,7 +37,7 @@ class IndexView(ServerAuthView, TemplateView):
 
     @context
     def products(self):
-        return self.server.packages_with_active_license()
+        return packages_with_active_license([self.server])
 
 
 class PackageView(ServerAuthView, DetailView):
@@ -46,11 +47,13 @@ class PackageView(ServerAuthView, DetailView):
     template_name = 'download/pep503/package.html'
 
     def get_queryset(self):
-        return self.server.packages_with_active_license()
+        return packages_with_active_license([self.server])
 
 
 class DownloadView(PackageView):
 
     def get(self, request, *args, **kwargs):
         version = get_object_or_404(self.get_object().versions.all(), pk=kwargs.get('version'))
+        if not version.deliverable_file:
+            return HttpResponse('No file available for this version', status=404)
         return FileResponse(version.deliverable_file)

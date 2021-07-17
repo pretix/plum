@@ -29,7 +29,7 @@ class PasswordReset(PasswordResetView):
 
     def form_valid(self, form):
         email = form.cleaned_data["email"]
-        messages.success(self.request, _('Great, we\'ll send you an email. Note that we will not send out multiple'
+        messages.success(self.request, _('Great, we\'ll send you an email. Note that we will not send out multiple '
                                          'emails within 24 hours.'))
         has_redis = settings.HAS_REDIS
         if has_redis:

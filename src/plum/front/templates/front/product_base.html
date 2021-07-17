@@ -49,6 +49,11 @@
                         <span class="fa fa-check"></span>
                         {% trans "Bundled" %}
                     </button>
+                {% elif product.delivery_method == "file" %}
+                    <a href="{% url "front:product.versions" product=product.slug %}" class="btn btn-outline-success btn-block">
+                        <span class="fa fa-download"></span>
+                        {% trans "Download" %}
+                    </a>
                 {% else %}
                     <a href="{% url "front:product.instructions" product=product.slug %}" class="btn btn-outline-success btn-block">
                         <span class="fa fa-download"></span>

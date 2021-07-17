@@ -19,6 +19,11 @@
                                 <span class="fa fa-download"></span>
                                 <span class="d-none d-md-inline">{% trans "Download" %}</span>
                             </a>
+                        {% elif product.delivery_method == "file" %}
+                            <a href="{% url "download:file.download" package=product.package_name version=v.pk %}" target="_blank" class="btn btn-outline-primary btn-block">
+                                <span class="fa fa-download"></span>
+                                <span class="d-none d-md-inline">{% trans "Download" %}</span>
+                            </a>
                         {% endif %}
                     </div>
                 </div>
@@ -37,6 +42,11 @@
                 {% endif %}
                 {% if v.release_notes %}
                     {{ v.release_notes|rich_text }}
+                {% endif %}
+                {% if v.deliverable_file_checksum %}
+                    <p class="text-muted">
+                        <small>{% trans "SHA-256 checksum" %}: <code>{{ v.deliverable_file_checksum }}</code></small>
+                    </p>
                 {% endif %}
             </div>
         </div>
