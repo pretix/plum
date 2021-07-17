@@ -43,16 +43,26 @@ class UploadView(UploaderAuthView, View):
         if 'file' not in request.FILES:
             return HttpResponse('No file given', status=400)
         f = request.FILES['file']
-        # https://www.python.org/dev/peps/pep-0427/#file-name-convention
-        fname = re.compile('^([a-z0-9_]+)-([0-9][a-z0-9.]*)(-[^-]+)?-([^-]+)-([^-]+)-([^-]+)\\.whl$')
-        m = fname.match(f.name)
-        if not m:
-            return HttpResponse('Invalid wheel file name', status=400)
-        if m.group(1) != re.sub("[^\w\d.]+", "_", self.product.package_name, re.UNICODE):
-            return HttpResponse('Invalid package name in filename', status=400)
-        if m.group(5) != 'none' or m.group(6) != 'any':
-            return HttpResponse('Only wheels of type none-any are currently supported', status=400)
-        version = m.group(2)
+
+        if self.product.delivery_method == Product.DELIVERY_LOCALPIP:
+            # https://www.python.org/dev/peps/pep-0427/#file-name-convention
+            fname = re.compile('^([a-z0-9_]+)-([0-9][a-z0-9.]*)(-[^-]+)?-([^-]+)-([^-]+)-([^-]+)\\.whl$')
+            m = fname.match(f.name)
+            if not m:
+                return HttpResponse('Invalid wheel file name', status=400)
+            if m.group(1) != re.sub("[^\w\d.]+", "_", self.product.package_name, re.UNICODE):
+                return HttpResponse('Invalid package name in filename', status=400)
+            if m.group(5) != 'none' or m.group(6) != 'any':
+                return HttpResponse('Only wheels of type none-any are currently supported', status=400)
+            version = m.group(2)
+        elif self.product.delivery_method == Product.DELIVERY_FILE:
+            if 'version' not in request.POST:
+                return HttpResponse('Please supply a version name', status=400)
+            version = request.POST.get('version')
+        else:
+            return HttpResponse('Package does not allow uploads', status=400)
+
+
         if self.product.versions.filter(name=version).exists():
             return HttpResponse('Version already exists', status=400)
         v = self.product.versions.create(
