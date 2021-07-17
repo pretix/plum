@@ -131,6 +131,7 @@ class ProductVersion(models.Model):
     deliverable_file = models.FileField(null=True, upload_to=deliverable_filename, blank=True)
     deliverable_file_checksum = models.CharField(blank=True, max_length=255)
     deliverable_file_name = models.CharField(blank=True, max_length=255)
+    deliverable_file_size = models.BigIntegerField(blank=True, null=True)
 
     min_platform_version = models.ForeignKey('PlatformVersion', on_delete=models.PROTECT, related_name='products_from',
                                              verbose_name=_('Minimum platform version'), null=True, blank=True)
@@ -146,6 +147,8 @@ class ProductVersion(models.Model):
             for buf in iter(partial(self.deliverable_file.read, 65536), b''):
                 hasher.update(buf)
             self.deliverable_file_checksum = hasher.hexdigest()
+        if self.deliverable_file and not self.deliverable_file_size:
+            self.deliverable_file_size = self.deliverable_file.size
         return super().save(*args, **kwargs)
 
 

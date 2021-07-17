@@ -11,7 +11,12 @@
                 <div class="row">
                     <div class="col-10">
                         <strong>{{ v.name }}</strong><br>
-                        <span class="text-muted">{{ v.release_date|date:"SHORT_DATE_FORMAT" }}</span>
+                        <span class="text-muted">
+                            {{ v.release_date|date:"SHORT_DATE_FORMAT" }}
+                            {% if v.deliverable_file_size %}
+                                &middot; {{ v.deliverable_file_size|filesizeformat }}
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="col-2">
                         {% if product.delivery_method == "pypi" and v.deliverable_url %}
@@ -22,7 +27,9 @@
                         {% elif product.delivery_method == "file" %}
                             <a href="{% url "download:file.download" package=product.package_name version=v.pk %}" target="_blank" class="btn btn-outline-primary btn-block">
                                 <span class="fa fa-download"></span>
-                                <span class="d-none d-md-inline">{% trans "Download" %}</span>
+                                <span class="d-none d-md-inline">
+                                    {% trans "Download" %}
+                                </span>
                             </a>
                         {% endif %}
                     </div>
@@ -37,7 +44,7 @@
                     </div>
                 {% elif v.max_platform_version %}
                     <div>
-                        {% trans "Maximumplatform version:" %} {{ v.max_platform_version }}
+                        {% trans "Maximum platform version:" %} {{ v.max_platform_version }}
                     </div>
                 {% endif %}
                 {% if v.release_notes %}
@@ -45,7 +52,7 @@
                 {% endif %}
                 {% if v.deliverable_file_checksum %}
                     <p class="text-muted">
-                        <small>{% trans "SHA-256 checksum" %}: <code>{{ v.deliverable_file_checksum }}</code></small>
+                        <small>{% trans "SHA-256 checksum"%}: <code>{{ v.deliverable_file_checksum }}</code></small>
                     </p>
                 {% endif %}
             </div>
