@@ -10,8 +10,17 @@
                 {% for c in categories %}
                     <li>
                         <a href="{% url "front:category" cat=c.pk %}">
-                            {{ c }}
+                            <strong>
+                                {{ c }}
+                            </strong>
                         </a>
+                        <span class="text-muted">
+                        ({% blocktrans trimmed with cnt=c.c|default_if_none:0 count cnt=c.c|default_if_none:0 %}
+                            {{ cnt }} product
+                        {% plural %}
+                            {{ cnt }} products
+                        {% endblocktrans %})
+                    </span>
                     </li>
                 {% endfor %}
             </ul>

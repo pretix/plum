@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView, ListView, DetailView
@@ -16,7 +16,7 @@ class IndexView(TemplateView):
 
 
 class CategoriesList(ListView):
-    queryset = Category.objects.order_by('name')
+    queryset = Category.objects.annotate(c=Count('products')).order_by('name')
     template_name = 'front/categories.html'
     context_object_name = 'categories'
 
