@@ -70,6 +70,15 @@
                     </div>
                 </div>
             {% endif %}
+            {% if product.external_store_url %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <a href="{{ product.external_store_url }}" target="_blank">
+                            <span class="fa fa-shopping-bag fa-fw"></span> {% trans "View on external store" %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
             {% if product.github_url %}
                 <div class="card mt-4">
                     <div class="card-body">
