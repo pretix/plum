@@ -23,6 +23,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = _('Category')
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
