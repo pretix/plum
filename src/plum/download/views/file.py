@@ -54,7 +54,7 @@ class DownloadView(PackageView):
         except Http404:
             return HttpResponse('This version either does not exist or you have no active license to download it.',
                                 status=404)
-        except (ProductVersion.DoesNotExist, Http404):
+        except (ValueError, ProductVersion.DoesNotExist, Http404):
             try:
                 version = self.object.versions.get(name=kwargs.get('version'))
             except (ProductVersion.DoesNotExist, Http404):
