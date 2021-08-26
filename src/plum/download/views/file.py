@@ -51,9 +51,15 @@ class DownloadView(PackageView):
         try:
             self.object = self.get_object()
             version = self.object.versions.get(pk=kwargs.get('version'))
-        except (ProductVersion.DoesNotExist, Http404):
+        except Http404:
             return HttpResponse('This version either does not exist or you have no active license to download it.',
                                 status=404)
+        except (ProductVersion.DoesNotExist, Http404):
+            try:
+                version = self.object.versions.get(name=kwargs.get('version'))
+            except (ProductVersion.DoesNotExist, Http404):
+                return HttpResponse('This version either does not exist or you have no active license to download it.',
+                                    status=404)
         if not version.deliverable_file:
             return HttpResponse('No file available for this version', status=404)
         extension = os.path.splitext(version.deliverable_file.name)[1]
