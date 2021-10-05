@@ -54,6 +54,9 @@ class Edit(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return Vendor.objects.filter(users__in=[self.request.user])
 
+    def get_success_url(self):
+        return reverse("front:vendor.index", kwargs={'pk': self.vendor.pk})
+
 
 class CreateProduct(LoginRequiredMixin, CreateView):
     model = Product
