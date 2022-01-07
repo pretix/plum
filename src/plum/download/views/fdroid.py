@@ -16,7 +16,7 @@ from fdroidserver import signindex, common
 
 from plum.core.models import SiteConfiguration, Product, ProductVersion
 from plum.download.licenses import packages_with_active_license
-from plum.settings import BASE_DIR
+from plum.settings import DATA_DIR
 
 
 def create_keystore_if_not_exists(name):
@@ -86,13 +86,13 @@ class IndexView(ListView):
             common.config = signindex.config = {
                 'jarsigner': 'jarsigner',
                 'repo_keyalias': 'plum',
-                'keystore': os.path.join(BASE_DIR, 'fdroid.keystore'),
+                'keystore': os.path.join(DATA_DIR, 'fdroid.keystore'),
                 'keystorepass': 'wellknown',
                 'keypass': 'wellknown',
             }
             common.options = UserDict()
             common.options.verbose = False
-            create_keystore_if_not_exists(os.path.join(BASE_DIR, 'fdroid.keystore'))
+            create_keystore_if_not_exists(os.path.join(DATA_DIR, 'fdroid.keystore'))
             signindex.sign_index_v1(tmpdir, 'index-v1.json')
 
             return FileResponse(open(os.path.join(tmpdir, 'index-v1.jar'), 'rb'))
