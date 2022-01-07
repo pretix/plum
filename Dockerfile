@@ -20,9 +20,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN mkdir /data
 RUN mkdir /code
 
-COPY docker/get-pip.py /tmp/get-pip.py
-RUN python3 /tmp/get-pip.py
-
 COPY src/requirements.txt /tmp/requirements.txt
 RUN pip install gunicorn -Ur /tmp/requirements.txt
 
