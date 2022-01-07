@@ -8,7 +8,7 @@ from collections import UserDict
 from urllib.parse import urljoin
 
 from django.conf import settings
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Max
 from django.http import FileResponse, Http404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
@@ -59,7 +59,7 @@ class IndexView(ListView):
         data = {
             "repo": {
                 "timestamp": int(time.time() * 1000),
-                "version": int(time.time()),
+                "version": int(ProductVersion.objects.aggregate(m=Max('pk'))['m'] or None),
                 "maxage": 14,
                 "name": siteconf.site_name,
                 "icon": "fdroid-icon.png",  # TODO
@@ -108,10 +108,14 @@ class IndexView(ListView):
             "suggestedVersionCode": product.active_versions[0].android_index_data['versionCode'],
             "license": "",
             "webSite": product.website_url,
-            "added": int(time.time() * 1000),  # todo
+            "added": int(datetime.datetime.combine(
+                min(v.release_date for v in product.active_versions), datetime.time(0, 0, 0)
+            ).replace(tzinfo=datetime.timezone.utc).timestamp() * 1000),
             "icon": f'{product.package_name}.png' if product.icon else None,
             "packageName": product.android_package_name,
-            "lastUpdated": int(time.time() * 1000),  # todo
+            "lastUpdated": int(datetime.datetime.combine(
+                max(v.release_date for v in product.active_versions), datetime.time(0, 0, 0)
+            ).replace(tzinfo=datetime.timezone.utc).timestamp() * 1000),
             "localized": {
                 "en-US": {
                     "description": product.long_description,
