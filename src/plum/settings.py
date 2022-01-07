@@ -1,9 +1,9 @@
 import configparser
 import os
-from django.contrib import messages
+import sys
 from urllib.parse import urlparse
 
-import sys
+from django.contrib import messages
 from django.utils.crypto import get_random_string
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -45,7 +45,8 @@ else:
 debug_default = 'runserver' in sys.argv
 DEBUG = os.environ.get('PLUM_DEBUG', str(debug_default)) == 'True'
 
-MAIL_FROM = SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ.get('PLUM_MAIL_FROM', config.get('mail', 'from', fallback='admin@localhost'))
+MAIL_FROM = SERVER_EMAIL = DEFAULT_FROM_EMAIL = os.environ.get('PLUM_MAIL_FROM',
+                                                               config.get('mail', 'from', fallback='admin@localhost'))
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
@@ -58,7 +59,8 @@ else:
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.' + os.getenv('PLUM_DB_TYPE', config.get('database', 'backend', fallback='sqlite3')),
+        'ENGINE': 'django.db.backends.' + os.getenv('PLUM_DB_TYPE',
+                                                    config.get('database', 'backend', fallback='sqlite3')),
         'NAME': os.getenv('PLUM_DB_NAME', config.get('database', 'name', fallback='db.sqlite3')),
         'USER': os.getenv('PLUM_DB_USER', config.get('database', 'user', fallback='')),
         'PASSWORD': os.getenv('PLUM_DB_PASS', config.get('database', 'password', fallback='')),
@@ -72,7 +74,7 @@ SITE_URL = os.getenv('PLUM_SITE_URL', config.get('plum', 'url', fallback='http:/
 if SITE_URL == 'http://localhost':
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = [urlparse(SITE_URL).netloc]
+    ALLOWED_HOSTS = [urlparse(SITE_URL).hostname]
 
 if os.getenv('PLUM_COOKIE_DOMAIN', ''):
     SESSION_COOKIE_DOMAIN = os.getenv('PLUM_COOKIE_DOMAIN', '')

@@ -10,6 +10,10 @@ from django.utils.translation import ugettext_lazy as _
 from functools import partial
 
 
+def icon_filename(instance, filename):
+    return 'icon/{}/{}{}'.format(instance.pk, str(uuid.uuid4()), os.path.splitext(filename)[1])
+
+
 class Vendor(models.Model):
     name = models.CharField(max_length=190, verbose_name=_('Name'))
     certified = models.BooleanField(default=False, verbose_name=_('Certified vendor'))
@@ -31,12 +35,14 @@ class Product(models.Model):
     DELIVERY_PYPI = 'pypi'
     DELIVERY_LOCALPIP = 'pip'
     DELIVERY_BUNDLED = 'bundled'
+    DELIVERY_ANDROID = 'android'
     DELIVERY_FILE = 'file'
     DELIVERY_EXTERNAL = 'external'
     DELIVERY_METHODS = (
         (DELIVERY_PYPI, _('PyPI')),
         (DELIVERY_LOCALPIP, _('Local python package index')),
         (DELIVERY_BUNDLED, _('Bundled')),
+        (DELIVERY_ANDROID, _('Android app')),
         (DELIVERY_FILE, _('File')),
         (DELIVERY_EXTERNAL, _('External store')),
     )
@@ -72,6 +78,7 @@ class Product(models.Model):
     long_description = models.TextField(verbose_name=_('Long description'))
     approved = models.BooleanField(default=False, verbose_name=_('Approved and visible'))
     certified = models.BooleanField(default=False, verbose_name=_('Certified plugin'))
+    icon = models.FileField(null=True, upload_to=icon_filename, blank=True)
 
     stability = models.CharField(choices=STABILITY_VALUES, max_length=190, verbose_name=_('Stability'))
     delivery_method = models.CharField(choices=DELIVERY_METHODS, max_length=190, verbose_name=_('Delivery method'))
@@ -87,6 +94,8 @@ class Product(models.Model):
     website_url = models.URLField(blank=True, verbose_name=_('Website URL'))
     package_name = models.CharField(blank=False, null=True, unique=True, max_length=190, verbose_name=_('Package name'),
                                     help_text=_('Should be a valid Python package name. For free packages, this is the name the package should have on on PyPI.'))
+
+    android_package_name = models.CharField(blank=True, null=True, unique=True, max_length=190)
 
     upload_key = models.CharField(max_length=64, default=gen_upload_key)
 
@@ -140,6 +149,7 @@ class ProductVersion(models.Model):
                                              verbose_name=_('Minimum platform version'), null=True, blank=True)
     max_platform_version = models.ForeignKey('PlatformVersion', on_delete=models.PROTECT, related_name='products_upto',
                                              verbose_name=_('Maximum platform version'), null=True, blank=True)
+    android_index_data = models.JSONField(null=True, blank=True)
 
     class Meta:
         ordering = ("-release_date", "-pk")
