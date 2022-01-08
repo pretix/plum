@@ -96,6 +96,7 @@ class Product(models.Model):
                                     help_text=_('Should be a valid Python package name. For free packages, this is the name the package should have on on PyPI.'))
 
     android_package_name = models.CharField(blank=True, null=True, unique=True, max_length=190)
+    android_is_on_gplay = models.BooleanField(default=False)
 
     upload_key = models.CharField(max_length=64, default=gen_upload_key)
 

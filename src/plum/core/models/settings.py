@@ -44,6 +44,9 @@ class SiteConfiguration(SingletonModel):
     doc_installation = models.URLField(
         default='https://docs.pretix.eu/en/latest/admin/installation/index.html'
     )
+    android_client_url = models.URLField(
+        null=True, blank=True
+    )
 
     def __unicode__(self):
         return u"Site Configuration"

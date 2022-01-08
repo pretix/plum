@@ -10,7 +10,7 @@
         <div class="card my-3">
         <pre class="card-body my-0"><code>{{ siteconf.pre_install_commands|safe }}
 (venv)$ pip install {{ product.package_name }}
-{{ siteconf.post_install_commands|safe }}</code></pre>
+            {{ siteconf.post_install_commands|safe }}</code></pre>
         </div>
         <p>
             {% trans "For more information and other types of setups, please refer to the install guide." %}
@@ -27,8 +27,55 @@
             {% trans 'Go to the "Versions" tab and download the most recent version.' %}
         </div>
     {% elif product.delivery_method == "android" %}
-        <div class="alert alert-info">
-            {% trans 'Go to the "Versions" tab and download the most recent version.' %}
+        <h4>{% trans "Direct download" %}</h4>
+        <p>
+            {% blocktrans trimmed %}
+                You can go to the "Versions" tab and download the most recent version onto your device. The first time,
+                you will need to allow app installations from your browser in system settings when you are asked to. Note
+                that with this method you will not receive any updates. Since it is important to keep the software up to
+                date, you need to regularly check for new versions. We recommend to instead use one of the methods below.
+            {% endblocktrans %}
+        </p>
+        {% if product.android_is_on_gplay %}
+            <h4>{% trans "Download from Google Play" %}</h4>
+            <p>
+                {% blocktrans trimmed %}
+                    If your device has access to the Google Play store, you can download this app from Google Play to
+                    automatically receive updates.
+                {% endblocktrans %}
+            </p>
+            <p>
+                <a href="https://play.google.com/store/apps/details?id={{ product.android_package_name }}"
+                   class="btn btn-outline-primary" target="_blank">
+                    {% trans "Open Google Play" %}
+                </a>
+            </p>
+        {% endif %}
+        {% if siteconf.android_client_url %}
+            <h4>{% trans "Download using our client app" %}</h4>
+            <p>
+                {% blocktrans trimmed %}
+                    You can download our marketplace client app, which allows you to install this and all of our other
+                    Android apps and receive updates. Updates will not be applied automatically, but you will receive
+                     a notification on your device when a new version is available and you can install the update
+                    with the click of a button.
+                {% endblocktrans %}
+            </p>
+            <p>
+                <a href="{{ siteconf.android_client_url }}"
+                   class="btn btn-outline-primary" target="_blank">
+                    {% trans "Get client application" %}
+                </a>
+            </p>
+        {% endif %}
+        <h4>{% trans "Add our repository to F-Droid" %}</h4>
+        <p>
+            {% blocktrans trimmed %}
+                If you're using the F-Droid package manager, you can add our F-Droid repository in the F-Droid settings:
+            {% endblocktrans %}
+        </p>
+        <div class="card my-3">
+        <pre class="card-body my-0"><code>{{ settings.SITE_URL }}/fdroid/repo</code></pre>
         </div>
     {% endif %}
 {% endblock %}
