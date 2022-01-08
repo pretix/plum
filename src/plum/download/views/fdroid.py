@@ -14,7 +14,7 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView
 from fdroidserver import signindex, common
 
-from plum.core.models import SiteConfiguration, Product, ProductVersion
+from plum.core.models import SiteConfiguration, Product, ProductVersion, ProductScreenshot
 from plum.download.licenses import packages_with_active_license
 from plum.settings import DATA_DIR
 
@@ -51,7 +51,8 @@ class IndexView(ListView):
                 'versions',
                 queryset=ProductVersion.objects.filter(android_index_data__isnull=False),
                 to_attr='active_versions'
-            )
+            ),
+            'screenshots',
         )
 
     def get(self, request, *args, **kwargs):
@@ -62,7 +63,7 @@ class IndexView(ListView):
                 "version": int(ProductVersion.objects.aggregate(m=Max('pk'))['m'] or None),
                 "maxage": 14,
                 "name": siteconf.site_name,
-                "icon": "fdroid-icon.png",  # TODO
+                "icon": "fdroid-icon.png",  # TODO, but seems to be unused?
                 "address": f"{settings.SITE_URL}/",
                 "description": f"Packages from {siteconf.site_name}",
             },
@@ -120,7 +121,9 @@ class IndexView(ListView):
                 "en-US": {
                     "description": product.long_description,
                     "name": product.name,
-                    "phoneScreenshots": [],  # todo?
+                    "phoneScreenshots": [
+                        f'{s.pk}.png' for s in product.screenshots.all()
+                    ],
                     "summary": product.long_description.split(".")[0].split("\n")[0],
                 },
             }
@@ -138,7 +141,6 @@ class IndexView(ListView):
 
 
 class IconView(DetailView):
-    context_object_name = 'product'
     slug_url_kwarg = 'package'
     slug_field = 'package_name'
     queryset = Product.objects.filter(approved=True)
@@ -148,3 +150,14 @@ class IconView(DetailView):
         if not object.icon:
             raise Http404()
         return FileResponse(object.icon.open())
+
+
+class ScreenshotView(DetailView):
+    pk_url_kwarg = 'id'
+    queryset = ProductScreenshot.objects.filter(product__approved=True)
+
+    def get(self, request, *args, **kwargs):
+        object = self.get_object()
+        if not object.picture:
+            raise Http404()
+        return FileResponse(object.picture.open())
