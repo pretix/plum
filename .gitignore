@@ -22,4 +22,5 @@ local/
 data/
 *.cfg
 static.dist
+*.keystore
 
