@@ -78,6 +78,7 @@ class Product(models.Model):
     long_description = models.TextField(verbose_name=_('Long description'))
     approved = models.BooleanField(default=False, verbose_name=_('Approved and visible'))
     certified = models.BooleanField(default=False, verbose_name=_('Certified plugin'))
+    unlisted = models.BooleanField(default=False, verbose_name=_('Unlisted'))
     icon = models.FileField(null=True, upload_to=icon_filename, blank=True)
 
     stability = models.CharField(choices=STABILITY_VALUES, max_length=190, verbose_name=_('Stability'))

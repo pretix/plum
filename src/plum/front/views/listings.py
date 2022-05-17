@@ -12,7 +12,7 @@ class IndexView(TemplateView):
 
     @context
     def products(self):
-        return Product.objects.filter(approved=True).exclude(stability='discontinued').select_related('vendor', 'category').order_by('-certified', 'name')
+        return Product.objects.filter(approved=True, unlisted=False).exclude(stability='discontinued').select_related('vendor', 'category').order_by('-certified', 'name')
 
 
 class CategoriesList(ListView):
@@ -26,7 +26,7 @@ class CategoryPage(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return self.category.products.filter(approved=True).exclude(stability='discontinued').select_related('vendor').order_by('name')
+        return self.category.products.filter(approved=True, unlisted=False).exclude(stability='discontinued').select_related('vendor').order_by('name')
 
     @context
     @cached_property
@@ -39,7 +39,7 @@ class VendorPage(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        return self.vendor.products.filter(approved=True).select_related('vendor').order_by('name')
+        return self.vendor.products.filter(approved=True, unlisted=False).select_related('vendor').order_by('name')
 
     @context
     @cached_property
