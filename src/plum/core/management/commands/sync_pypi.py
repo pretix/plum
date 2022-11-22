@@ -15,6 +15,10 @@ class Command(BaseCommand):
         for p in Product.objects.filter(delivery_method=Product.DELIVERY_PYPI).exclude(package_name=""):
             try:
                 r = requests.get('https://pypi.org/pypi/{}/json/'.format(p.package_name))
+                if r.status_code == 404:
+                    logger.info('Could not fetch metadata of "{}" from PyPI, package does not exist'.format(p))
+                    continue
+
                 r.raise_for_status()
                 d = r.json()
             except:
