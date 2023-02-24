@@ -26,6 +26,11 @@
         </div>
         <div class="col-md-4 mt-4 mt-md-0">
             <div class="card">
+                {% if not product.vendor.certified %}
+                    <div class="alert alert-warning">
+                        {% trans "This plugin is provided by the following third-party vendor. We have not verified the quality and cannot provide support for this plugin." %}
+                    </div>
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="{% url "front:vendor" pk=product.vendor.pk %}">

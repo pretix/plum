@@ -15,6 +15,9 @@
                 {% blocktrans trimmed with vendor=p.vendor %}
                     by {{ vendor }}
                 {% endblocktrans %}
+                {% if not p.vendor.certified %}
+                    <span class="badge bg-light text-warning">{% trans "3rd-party" %}</span>
+                {% endif %}
             </p>
             <div class="d-flex justify-content-between align-items-center">
                 <a class="btn btn-sm btn-outline-secondary" href="{% url "front:product" product=p.slug %}">

@@ -15,6 +15,11 @@
                 {% endif %}
             </h2>
         <p>
+            {% if not product.vendor.certified %}
+                <div class="alert alert-warning">
+                    {% trans "The following plugins are provided by a third-party vendor. We have not verified the quality and cannot provide support for these plugins." %}
+                </div>
+            {% endif %}
 
         </p>
             <div class="row">
