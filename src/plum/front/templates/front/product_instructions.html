@@ -10,7 +10,7 @@
         <div class="card my-3">
         <pre class="card-body my-0"><code>{{ siteconf.pre_install_commands|safe }}
 (venv)$ pip install {{ product.package_name }}
-            {{ siteconf.post_install_commands|safe }}</code></pre>
+{{ siteconf.post_install_commands|safe }}</code></pre>
         </div>
         <p>
             {% trans "For more information and other types of setups, please refer to the install guide." %}
@@ -57,7 +57,7 @@
                 {% blocktrans trimmed %}
                     You can download our marketplace client app, which allows you to install this and all of our other
                     Android apps and receive updates. Updates will not be applied automatically, but you will receive
-                     a notification on your device when a new version is available and you can install the update
+                    a notification on your device when a new version is available and you can install the update
                     with the click of a button.
                 {% endblocktrans %}
             </p>
