@@ -94,7 +94,7 @@ class IndexView(ListView):
             common.options = UserDict()
             common.options.verbose = False
             create_keystore_if_not_exists(os.path.join(DATA_DIR, 'fdroid.keystore'))
-            signindex.sign_index_v1(tmpdir, 'index-v1.json')
+            signindex.sign_index(tmpdir, 'index-v1.json')
 
             return FileResponse(open(os.path.join(tmpdir, 'index-v1.jar'), 'rb'))
 
