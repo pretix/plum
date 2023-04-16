@@ -75,6 +75,7 @@ if SITE_URL == 'http://localhost':
     ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = [urlparse(SITE_URL).hostname]
+    CSRF_TRUSTED_ORIGINS = ['https://' + urlparse(SITE_URL).hostname]
 
 if os.getenv('PLUM_COOKIE_DOMAIN', ''):
     SESSION_COOKIE_DOMAIN = os.getenv('PLUM_COOKIE_DOMAIN', '')
