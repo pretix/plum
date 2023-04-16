@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, 
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from plum.core.models import SiteConfiguration, User

@@ -6,4 +6,3 @@ class DlConfig(AppConfig):
     verbose_name = 'Download'
 
 
-default_app_config = 'plum.download.DlConfig'

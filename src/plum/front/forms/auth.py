@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.password_validation import validate_password, password_validators_help_texts
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from plum.core.models import User
 

@@ -8,7 +8,7 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
-ALLOWED_TAGS = [
+ALLOWED_TAGS = {
     'a',
     'abbr',
     'acronym',
@@ -39,7 +39,7 @@ ALLOWED_TAGS = [
     'h5',
     'h6',
     'pre',
-]
+}
 
 ALLOWED_ATTRIBUTES = {
     'a': ['href', 'title'],
@@ -52,7 +52,7 @@ ALLOWED_ATTRIBUTES = {
     'span': ['class'],
 }
 
-ALLOWED_PROTOCOLS = ['http', 'https', 'mailto', 'tel']
+ALLOWED_PROTOCOLS = {'http', 'https', 'mailto', 'tel'}
 
 
 def abslink_callback(attrs, new=False):

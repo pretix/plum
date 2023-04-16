@@ -6,4 +6,3 @@ class CoreConfig(AppConfig):
     verbose_name = 'Core'
 
 
-default_app_config = 'plum.core.CoreConfig'

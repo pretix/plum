@@ -6,4 +6,3 @@ class FrontConfig(AppConfig):
     verbose_name = 'Front'
 
 
-default_app_config = 'plum.front.FrontConfig'

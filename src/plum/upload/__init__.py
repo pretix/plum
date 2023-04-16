@@ -6,4 +6,3 @@ class UlConfig(AppConfig):
     verbose_name = 'Upload'
 
 
-default_app_config = 'plum.upload.UlConfig'

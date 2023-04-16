@@ -1,6 +1,6 @@
 from django.contrib.admin import AdminSite, ModelAdmin, TabularInline, StackedInline
 from django.contrib.auth.admin import UserAdmin
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from solo.admin import SingletonModelAdmin
 
 from ..models import PlatformVersion, PriceVariable, Category, Product, ProductPriceTier, ProductScreenshot, ProductVersion, Vendor, SiteConfiguration, Server, \

@@ -1,4 +1,5 @@
-import pytz
+from zoneinfo import ZoneInfo
+
 from django.conf import settings
 from django.db.models import Exists, OuterRef, Q
 from django.utils.timezone import now
@@ -10,7 +11,7 @@ from ..core.models.product import Product
 def packages_with_active_license(servers):
     if not servers:
         return Product.objects.filter(is_paid=False)
-    tz = pytz.timezone(settings.TIME_ZONE)
+    tz = ZoneInfo(settings.TIME_ZONE)
     today = now().astimezone(tz).date()
 
     return Product.objects.annotate(

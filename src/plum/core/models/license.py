@@ -1,12 +1,9 @@
 # users/models.py
-import os
-import pytz
-import uuid
-from django.conf import settings
+from zoneinfo import ZoneInfo
 
+from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
 
 
 class License(models.Model):
@@ -22,6 +19,6 @@ class License(models.Model):
 
     @property
     def is_expired(self):
-        tz = pytz.timezone(settings.TIME_ZONE)
+        tz = ZoneInfo(settings.TIME_ZONE)
         today = now().astimezone(tz).date()
         return self.end_date < today
