@@ -64,7 +64,7 @@ class IndexView(ListView):
                 "maxage": 14,
                 "name": siteconf.site_name,
                 "icon": "fdroid-icon.png",  # TODO, but seems to be unused?
-                "address": f"{settings.SITE_URL}/",
+                "address": f"{settings.SITE_URL}/fdroid/repo",
                 "description": f"Packages from {siteconf.site_name}",
             },
             "requests": {
