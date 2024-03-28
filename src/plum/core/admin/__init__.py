@@ -1,6 +1,7 @@
 from django.contrib.admin import AdminSite, ModelAdmin, TabularInline, StackedInline
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
+from multifactor.admin import MultifactorUserAdmin
 from solo.admin import SingletonModelAdmin
 
 from ..models import PlatformVersion, PriceVariable, Category, Product, ProductPriceTier, ProductScreenshot, ProductVersion, Vendor, SiteConfiguration, Server, \
@@ -59,7 +60,7 @@ class LicenseAdmin(ModelAdmin):
     search_fields = ['product__name', 'account__name']
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(UserAdmin, MultifactorUserAdmin):
     ordering = ['email']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),

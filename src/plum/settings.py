@@ -142,6 +142,7 @@ INSTALLED_APPS = [
     'plum.upload',
     'easy_thumbnails',
     'django.contrib.admin.apps.SimpleAdminConfig',
+    'multifactor',
 ]
 
 THUMBNAIL_ALIASES = {
@@ -384,3 +385,15 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
 }
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
+
+MULTIFACTOR = {
+    'RECHECK': True,  # Invalidate previous authorisations at random intervals
+    'RECHECK_MIN': 3600 * 24 * 2,  # No recheks before this many days
+    'RECHECK_MAX': 3600 * 24 * 14,  # But within this many days
+
+    'FIDO_SERVER_ID': urlparse(SITE_URL).hostname,  # Server ID for FIDO request
+    'FIDO_SERVER_NAME': urlparse(SITE_URL).hostname,  # Human-readable name for FIDO request
+    'TOKEN_ISSUER_NAME': urlparse(SITE_URL).hostname,  # TOTP token issuing name (to be shown in authenticator)
+
+    'FALLBACKS': {},
+}
