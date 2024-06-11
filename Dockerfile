@@ -21,7 +21,7 @@ RUN mkdir /data
 RUN mkdir /code
 
 COPY src/requirements.txt /tmp/requirements.txt
-RUN pip install gunicorn -Ur /tmp/requirements.txt
+RUN pip install uv && uv pip install gunicorn -Ur /tmp/requirements.txt
 
 ENV PLUM_DATA_DIR /data
 RUN mkdir /code/plum

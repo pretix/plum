@@ -18,7 +18,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'slug', 'category', 'long_description',
-                  'stability', 'github_url',
+                  'stability', 'github_url', 'pricing_url',
                   'website_url', 'package_name']
 
     def clean_package_namae(self):
@@ -51,4 +51,4 @@ class UpdateProductForm(ProductForm):
         model = Product
         fields = ['name', 'category', 'long_description',
                   'stability', 'github_url',
-                  'website_url']
+                  'pricing_url', 'website_url']

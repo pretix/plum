@@ -93,6 +93,7 @@ class Product(models.Model):
     github_url = models.URLField(blank=True, verbose_name=_('GitHub URL'))
     external_store_url = models.URLField(blank=True, verbose_name=_('External store URL'))
     website_url = models.URLField(blank=True, verbose_name=_('Website URL'))
+    pricing_url = models.URLField(blank=True, verbose_name=_('Pricing URL'))
     package_name = models.CharField(blank=False, null=True, unique=True, max_length=190, verbose_name=_('Package name'),
                                     help_text=_('Should be a valid Python package name. For free packages, this is the name the package should have on on PyPI.'))
 

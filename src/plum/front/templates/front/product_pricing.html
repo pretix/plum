@@ -15,21 +15,31 @@
                         <span class="text-primary">{{ t.price|money:siteconf.currency }}</span>
                     </div>
                 {% endfor %}
-                <div class="col text-center">
-                    <small>{% trans "Additional pricing" %}</small>
-                    <br>
-                    <a href="mailto:{{ product.vendor.support_contact_email }}">Contact vendor</a>
-                </div>
-            </div>
-            <p class="mt-3 mb-0 text-center text-muted">
-                {% if product.pricing_timeframe == "monthly" %}
-                    {% trans "All prices are monthly and plus VAT where applicable." %}
-                {% elif product.pricing_timeframe == "yearly" %}
-                    {% trans "All prices are yearly and plus VAT where applicable." %}
-                {% elif product.pricing_timeframe == "lifetime" %}
-                    {% trans "All prices are one-time fees and plus VAT where applicable." %}
+                {% if product.pricing_url %}
+                    <div class="col text-center">
+                        <a href="{{ product.pricing_url }}" target="_blank">
+                            <span class="fa fa-globe fa-fw"></span> {% trans "View pricing on vendor website" %}
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col text-center">
+                        <small>{% trans "Additional pricing" %}</small>
+                        <br>
+                        <a href="mailto:{{ product.vendor.support_contact_email }}">Contact vendor</a>
+                    </div>
                 {% endif %}
-            </p>
+            </div>
+            {% if product.visible_tiers %}
+                <p class="mt-3 mb-0 text-center text-muted">
+                    {% if product.pricing_timeframe == "monthly" %}
+                        {% trans "All prices are monthly and plus VAT where applicable." %}
+                    {% elif product.pricing_timeframe == "yearly" %}
+                        {% trans "All prices are yearly and plus VAT where applicable." %}
+                    {% elif product.pricing_timeframe == "lifetime" %}
+                        {% trans "All prices are one-time fees and plus VAT where applicable." %}
+                    {% endif %}
+                </p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
