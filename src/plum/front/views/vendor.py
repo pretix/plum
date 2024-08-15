@@ -121,6 +121,9 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
     context_object_name = 'product'
     template_name = 'front/vendor/product_edit.html'
 
+    def get_queryset(self):
+        return Product.objects.filter(vendor=self.vendor)
+
     @cached_property
     def vendor(self):
         return get_object_or_404(
