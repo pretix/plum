@@ -71,6 +71,10 @@ class UserIndex(LoginRequiredMixin, TemplateView):
 
 
 def register(request):
+    if not settings.REGISTRATIONS_ALLOWED:
+        return render(request, 'front/auth/register_off.html', {
+            'contact': settings.SITE_CONTACT,
+        })
     ctx = {}
     if request.user.is_authenticated:
         return redirect(request.GET.get("next", 'front:index'))

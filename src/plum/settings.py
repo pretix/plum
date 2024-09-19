@@ -70,6 +70,12 @@ DATABASES = {
     }
 }
 
+BOOLEAN_STATES = {'1': True, 'yes': True, 'true': True, 'on': True,
+                  '0': False, 'no': False, 'false': False, 'off': False}
+
+REGISTRATIONS_ALLOWED = BOOLEAN_STATES[os.getenv('PLUM_REGISTRATIONS_ALLOWED', config.get('plum', 'registrations', fallback='on')).lower()]
+SITE_CONTACT = os.getenv('PLUM_CONTACT', config.get('plum', 'contact', fallback='foo@example.com'))
+
 SITE_URL = os.getenv('PLUM_SITE_URL', config.get('plum', 'url', fallback='http://localhost'))
 if SITE_URL == 'http://localhost':
     ALLOWED_HOSTS = ['*']

@@ -1,0 +1,18 @@
+{% extends "front/base.html" %}
+{% load compress %}
+{% load static %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="container my-5">
+        <h2>{% trans "Registrations disabled" %}</h2>
+        <p>
+            {% trans "Due to high influx of spam, registrations are currently disabled." %}
+            {% trans "Please feel free to reach out to us via email if you want to publish a plugin on the marketplace:" %}
+            {{ contact }}
+        </p>
+    </div>
+
+
+{% endblock %}
