@@ -50,7 +50,7 @@ class UploadView(UploaderAuthView, View):
             m = fname.match(f.name)
             if not m:
                 return HttpResponse('Invalid wheel file name', status=400)
-            if m.group(1) != re.sub("[^\w\d.]+", "_", self.product.package_name, re.UNICODE):
+            if m.group(1) != re.sub(r"[^\w\d.]+", "_", self.product.package_name, re.UNICODE):
                 return HttpResponse('Invalid package name in filename', status=400)
             if m.group(5) != 'none' or m.group(6) != 'any':
                 return HttpResponse('Only wheels of type none-any are currently supported', status=400)
