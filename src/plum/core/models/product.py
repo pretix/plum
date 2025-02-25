@@ -141,6 +141,7 @@ class ProductVersion(models.Model):
     name = models.CharField(max_length=190, verbose_name=_('Version name'))
     release_date = models.DateField()
     release_notes = models.TextField(blank=True)
+    allow_suggest = models.BooleanField(default=True, verbose_name=_('Allow using as suggested version'))
 
     deliverable_url = models.URLField(blank=True)
     deliverable_file = models.FileField(null=True, upload_to=deliverable_filename, blank=True)

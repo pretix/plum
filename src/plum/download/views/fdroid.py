@@ -77,6 +77,8 @@ class IndexView(ListView):
         for p in self.get_queryset():
             if p.active_versions:
                 app, package = self._app_for_product(p)
+                if not app:
+                    continue
                 data['apps'].append(app)
                 data['packages'][p.android_package_name] = package
 
@@ -99,14 +101,21 @@ class IndexView(ListView):
             return FileResponse(open(os.path.join(tmpdir, 'index-v1.jar'), 'rb'))
 
     def _app_for_product(self, product):
+        suggested_versions = [v for v in product.active_versions if v.allow_suggest]
+        if suggested_versions:
+            suggested_version = suggested_versions[0]
+        elif product.active_versions:
+            suggested_version = product.active_versions[0]
+        else:
+            return None, None
         app = {
             "categories": [
                 product.category.name
             ],
             "changelog": urljoin(settings.SITE_URL,
                                  reverse("front:product.versions", kwargs={'product': product.slug})),
-            "suggestedVersionName": product.active_versions[0].android_index_data['versionName'],
-            "suggestedVersionCode": str(product.active_versions[0].android_index_data['versionCode']),
+            "suggestedVersionName": suggested_version.android_index_data['versionName'],
+            "suggestedVersionCode": suggested_version.android_index_data['versionCode'],
             "license": "",
             "webSite": product.website_url,
             "added": int(datetime.datetime.combine(
