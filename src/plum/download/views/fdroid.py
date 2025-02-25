@@ -115,7 +115,7 @@ class IndexView(ListView):
             "changelog": urljoin(settings.SITE_URL,
                                  reverse("front:product.versions", kwargs={'product': product.slug})),
             "suggestedVersionName": suggested_version.android_index_data['versionName'],
-            "suggestedVersionCode": suggested_version.android_index_data['versionCode'],
+            "suggestedVersionCode": str(suggested_version.android_index_data['versionCode']),
             "license": "",
             "webSite": product.website_url,
             "added": int(datetime.datetime.combine(
