@@ -21,8 +21,7 @@ expect us to invest much time in it beyond the functionality we need for our use
 
 ## Security
 
-If you notice a security problem with this application, please reach out to security@pretix.eu privately instead
-of opening an issue.
+If you discover a security issue, please contact us at security@pretix.eu and see our [Responsible Disclosure Policy](https://docs.pretix.eu/trust/security/disclosure/) further information.
 
 ## License
 
