@@ -19,7 +19,7 @@ sentry-sdk==1.19.*
 pillow==11.*
 easy_thumbnails==2.8.*
 fdroidserver==2.4.*
-androguard==3.*
+androguard==4.*
 
 # dev 
 ipython
