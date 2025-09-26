@@ -8,7 +8,7 @@ django-context-decorator==1.6.*
 django-countries==7.6.*
 django-formset-js-improved
 django-multifactor==0.8.*
-django-decorator-include==3.0
+django-decorator-include==3.3
 bleach==6.2.*
 whitenoise==6.11.*
 markdown==3.9.*
