@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y python3 git python3-pip \
 	libxml2-dev libxslt1-dev python3-virtualenv locales libffi-dev \
-	build-essential python3-dev zlib1g-dev libssl-dev gettext git openjdk-11-jdk-headless \
+	build-essential python3-dev zlib1g-dev libssl-dev gettext git openjdk-17-jdk-headless \
 	libpq-dev libjpeg-dev curl --no-install-recommends
 
 RUN dpkg-reconfigure locales && \
