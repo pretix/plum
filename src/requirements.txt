@@ -5,7 +5,7 @@ django-bootstrap4==25.*
 django-solo==2.4.*
 django-libsass==0.9
 django-context-decorator==1.6.*
-django-countries==7.5.*
+django-countries==7.6.*
 django-multifactor==0.8.*
 django-formset-js-improved
 bleach==6.2.*
