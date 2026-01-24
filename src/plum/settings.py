@@ -88,6 +88,7 @@ if os.getenv('PLUM_COOKIE_DOMAIN', ''):
     CSRF_COOKIE_DOMAIN = os.getenv('PLUM_COOKIE_DOMAIN', '')
 
 SESSION_COOKIE_SECURE = os.getenv('PLUM_HTTPS', 'True' if SITE_URL.startswith('https:') else 'False') == 'True'
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE
 
 if os.getenv('PLUM_SENTRY_DSN', ''):
     import sentry_sdk
