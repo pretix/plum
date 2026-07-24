@@ -16,7 +16,7 @@ babel==2.17.*
 pycountry==24.6.*
 requests==2.32.*
 sentry-sdk==2.39.*
-pillow==11.3.*
+pillow==12.3.*
 easy_thumbnails==2.10.*
 fdroidserver==2.4.*
 androguard==4.*
