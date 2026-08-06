@@ -141,7 +141,8 @@ class ProductVersion(models.Model):
     name = models.CharField(max_length=190, verbose_name=_('Version name'))
     release_date = models.DateField()
     release_notes = models.TextField(blank=True)
-    allow_suggest = models.BooleanField(default=True, verbose_name=_('Allow using as suggested version'))
+    allow_suggest = models.BooleanField(default=True, verbose_name=_('Allow using as suggested version (Android only)'))
+    suggest_percentage = models.IntegerField(default=100, verbose_name=_('Rollout likelihood (Android only)'))
 
     deliverable_url = models.URLField(blank=True)
     deliverable_file = models.FileField(null=True, upload_to=deliverable_filename, blank=True)
@@ -167,6 +168,16 @@ class ProductVersion(models.Model):
         if self.deliverable_file and not self.deliverable_file_size:
             self.deliverable_file_size = self.deliverable_file.size
         return super().save(*args, **kwargs)
+
+    def allow_suggest_for_key(self, key):
+        if not self.allow_suggest:
+            return False
+
+        if self.suggest_percentage == 100:
+            return True
+
+        hashed_value = int(hashlib.sha256(key.encode()).digest()[0] / 255 * 100)
+        return hashed_value <= self.suggest_percentage
 
 
 class ProductPriceTier(models.Model):
