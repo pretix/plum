@@ -16,7 +16,15 @@ class IndexView(TemplateView):
 
 
 class CategoriesList(ListView):
-    queryset = Category.objects.annotate(c=Count('products')).order_by('name')
+    queryset = Category.objects.annotate(
+        c=Count(
+            'products',
+            filter=(
+                Q(products__approved=True, products__unlisted=False)
+                & ~Q(products__stability='discontinued')
+            )
+        )
+    ).order_by('name')
     template_name = 'front/categories.html'
     context_object_name = 'categories'
 
