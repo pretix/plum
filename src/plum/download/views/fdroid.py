@@ -1,6 +1,8 @@
 import datetime
+import hashlib
 import json
 import os
+import secrets
 import subprocess
 import tempfile
 import time
@@ -74,9 +76,10 @@ class IndexView(ListView):
             "apps": [],
             "packages": {}
         }
+        shard_key = self._get_shard_key(request)
         for p in self.get_queryset():
             if p.active_versions:
-                app, package = self._app_for_product(p)
+                app, package = self._app_for_product(p, shard_key)
                 if not app:
                     continue
                 data['apps'].append(app)
@@ -100,8 +103,18 @@ class IndexView(ListView):
 
             return FileResponse(open(os.path.join(tmpdir, 'index-v1.jar'), 'rb'))
 
-    def _app_for_product(self, product):
-        suggested_versions = [v for v in product.active_versions if v.allow_suggest]
+    def _get_shard_key(self, request):
+        return (
+            request.GET.get("serial") or
+            request.GET.get("android_id") or
+            secrets.token_hex(16)
+        )
+
+    def _app_for_product(self, product, shard_key):
+        suggested_versions = [
+            v for v in product.active_versions
+            if v.allow_suggest_for_key(shard_key)
+        ]
         if suggested_versions:
             suggested_version = suggested_versions[0]
         elif product.active_versions:

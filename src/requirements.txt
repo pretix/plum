@@ -20,6 +20,7 @@ pillow==12.3.*
 easy_thumbnails==2.10.*
 fdroidserver==2.4.*
 androguard==4.*
+packaging
 
 # dev 
 ipython
