@@ -115,7 +115,6 @@ class IndexView(ListView):
             v for v in product.active_versions
             if v.allow_suggest_for_key(shard_key)
         ]
-        print(suggested_versions)
         if suggested_versions:
             suggested_version = suggested_versions[0]
         elif product.active_versions:
