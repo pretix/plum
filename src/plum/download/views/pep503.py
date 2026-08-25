@@ -56,4 +56,4 @@ class DownloadView(PackageView):
         version = get_object_or_404(self.get_object().versions.all(), pk=kwargs.get('version'))
         if not version.deliverable_file:
             return HttpResponse('No file available for this version', status=404)
-        return FileResponse(version.deliverable_file)
+        return FileResponse(version.deliverable_file, as_attachment=True, filename=version.deliverable_file_name)

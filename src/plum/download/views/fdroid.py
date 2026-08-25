@@ -101,7 +101,7 @@ class IndexView(ListView):
             create_keystore_if_not_exists(os.path.join(DATA_DIR, 'fdroid.keystore'))
             signindex.sign_index(tmpdir, 'index-v1.json')
 
-            return FileResponse(open(os.path.join(tmpdir, 'index-v1.jar'), 'rb'))
+            return FileResponse(open(os.path.join(tmpdir, 'index-v1.jar'), 'rb'), as_attachment=True, filename='index-v1.jar')
 
     def _get_shard_key(self, request):
         return (
