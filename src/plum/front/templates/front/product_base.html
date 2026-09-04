@@ -50,20 +50,24 @@
                         {% trans "Bundled" %}
                     </button>
                 {% elif product.delivery_method == "file" %}
-                    <a href="{% url "front:product.versions" product=product.slug %}" class="btn btn-outline-success btn-block">
-                        <span class="fa fa-download"></span>
-                        {% trans "Download" %}
-                    </a>
+                    {% if request.resolver_match.url_name != "product.versions" %}
+                        <a href="{% url "front:product.versions" product=product.slug %}" class="btn btn-outline-success btn-block">
+                            <span class="fa fa-download"></span>
+                            {% trans "Download" %}
+                        </a>
+                    {% endif %}
                 {% elif product.delivery_method == "external" %}
                     <a href="{{ product.external_store_url }}" class="btn btn-outline-success btn-block" target="_blank">
                         <span class="fa fa-download"></span>
                         {% trans "Download" %}
                     </a>
                 {% else %}
-                    <a href="{% url "front:product.instructions" product=product.slug %}" class="btn btn-outline-success btn-block">
-                        <span class="fa fa-download"></span>
-                        {% trans "Install" %}
-                    </a>
+                    {% if request.resolver_match.url_name != "product.instructions" %}
+                        <a href="{% url "front:product.instructions" product=product.slug %}" class="btn btn-outline-success btn-block">
+                            <span class="fa fa-download"></span>
+                            {% trans "Install" %}
+                        </a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
